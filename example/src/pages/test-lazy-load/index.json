@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "lazy-load": "../../components/lazy-load/index"
+  }
+}

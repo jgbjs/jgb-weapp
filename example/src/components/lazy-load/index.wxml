@@ -1,0 +1,4 @@
+<view class="jgb-lazy-component">
+  <slot></slot>
+  <view>{{msg}}</view>
+</view>

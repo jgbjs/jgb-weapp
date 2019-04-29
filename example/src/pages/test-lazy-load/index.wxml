@@ -1,0 +1,9 @@
+<view class="inview">
+  <lazy-load j-loading="auto">我是在可视区域内组件</lazy-load>
+</view>
+<view class="inview">
+  <lazy-load j-threshold="-100" j-loading="auto">我是在可视区域外组件</lazy-load>
+</view>
+<view class="inview">
+  <lazy-load j-threshold="100" j-loading="auto">我是在可视区域外组件</lazy-load>
+</view>

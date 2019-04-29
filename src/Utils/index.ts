@@ -99,11 +99,17 @@ export function Intercept(
         baseValue = nvalue;
       },
       get() {
-        return (...data: any[]) => {
+        return async (...data: any[]) => {
           const fns = values.concat(baseValue);
-          return fns.reduce((prevValue, fn) => {
-            return fn.apply(this, prevValue);
-          }, data);
+          let prevValue: any = data;
+          for (const fn of fns) {
+            prevValue = await fn.apply(this, prevValue);
+          }
+          return prevValue;
+
+          // return fns.reduce((prevValue, fn) => {
+          //   return fn.apply(this, prevValue);
+          // }, data);
         };
       }
     });
