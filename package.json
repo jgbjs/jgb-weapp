@@ -1,12 +1,13 @@
 {
   "name": "jgb-weapp",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "publishConfig": {
     "access": "public"
   },
   "main": "lib/index.js",
   "license": "MIT",
   "typings": "types/index.d.ts",
+  "files": ["src", "types", "lib"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jgbjs/jgb-weapp.git"
