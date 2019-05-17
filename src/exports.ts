@@ -1,5 +1,5 @@
 import { Compute } from './compute';
-import { bus } from './EventBus';
+import EventBus, { bus } from './EventBus';
 import JApp from './JApp';
 import JComponent from './JComponent';
 import JPage from './JPage';
@@ -13,5 +13,5 @@ use(SetDataPlugin);
 use(ComputedPlugin);
 use(componentLazyLoadPlugin);
 
-export { JPage, JApp, JComponent, Router, bus, jgb, use, Compute };
+export { JPage, JApp, JComponent, Router, bus, jgb, EventBus, use, Compute };
 

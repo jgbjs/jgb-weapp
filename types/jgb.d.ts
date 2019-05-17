@@ -13,6 +13,8 @@ export { jgb };
 
 export var bus: IEventBus;
 
+export const EventBus: { new (): IEventBus };
+
 export var use: IUsePlugin;
 
 export const Compute: (opts: any) => (scope: any) => void;
