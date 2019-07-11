@@ -613,13 +613,13 @@ babel-plugin-transform-exponentiation-operator@^6.22.0:
     babel-plugin-syntax-exponentiation-operator "^6.8.0"
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-miniprogram@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.npm.taobao.org/babel-plugin-transform-miniprogram/download/babel-plugin-transform-miniprogram-0.5.2.tgz#32a3b01ff1d65b9749678d58bd69b3e4b7550254"
-  integrity sha1-MqOwH/HWW5dJZ41YvWmz5LdVAlQ=
+babel-plugin-transform-miniprogram@^0.7.1:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-miniprogram/-/babel-plugin-transform-miniprogram-0.7.2.tgz#b3a7386b2003e52a2595f9d044f062a6e144f643"
+  integrity sha512-zDmydnLS8+u3eblYNtLqrIHU800/Rgas6u+gQzPHtWuh33EbvRg36eooYrtz4BNe2siDkGVygkkrrjWJ4kvHvg==
   dependencies:
     lodash "^4.17.11"
-    miniapp-adapter "^1.5.2"
+    miniapp-adapter "^1.6.2"
     resolve "^1.8.1"
 
 babel-plugin-transform-regenerator@^6.22.0:
@@ -2355,14 +2355,14 @@ isstream@~0.1.2:
   resolved "https://registry.npm.taobao.org/isstream/download/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-jgb-plugin-babel@^1.4.13, jgb-plugin-babel@^1.5.2:
-  version "1.4.13"
-  resolved "https://registry.npm.taobao.org/jgb-plugin-babel/download/jgb-plugin-babel-1.4.13.tgz#733972f067dfaa95909dc6c20e12a716409cd453"
-  integrity sha1-czly8GffqpWQncbCDhKnFkCc1FM=
+jgb-plugin-babel@^1.5.2, jgb-plugin-babel@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-plugin-babel/-/jgb-plugin-babel-1.6.1.tgz#421c896aaba4d46a3cc0d077e853c46212131cf2"
+  integrity sha512-AvVtzLPQBzeX4o4qyfgGFSwt8R0B4fT6YPVNivISQ1mdPiqYO145UpLTh62gl+NOioCvJQWd+zcRiqmnTsDLgw==
   dependencies:
     babel-code-frame "^6.26.0"
     babel-core "^6.26.3"
-    babel-plugin-transform-miniprogram "^0.5.1"
+    babel-plugin-transform-miniprogram "^0.7.1"
     babel-preset-env "^1.7.0"
     babel-traverse "^6.26.0"
     babylon "^6.18.0"
@@ -2370,98 +2370,98 @@ jgb-plugin-babel@^1.4.13, jgb-plugin-babel@^1.5.2:
     browserslist "^4.0.1"
     chalk "^2.4.1"
     debug "^3.1.0"
-    jgb-shared "^1.4.13"
+    jgb-shared "^1.6.1"
     node-libs-browser "^2.1.0"
     semver "^5.5.0"
     terser "^3.8.1"
     tslib "^1.9.3"
 
-jgb-plugin-css@^1.4.13, jgb-plugin-css@^1.5.2:
-  version "1.4.13"
-  resolved "https://registry.npm.taobao.org/jgb-plugin-css/download/jgb-plugin-css-1.4.13.tgz#16516fc365b3d56997297a34f05cca722d861ff8"
-  integrity sha1-FlFvw2Wz1WmXKXo08FzKci2GH/g=
+jgb-plugin-css@^1.5.2, jgb-plugin-css@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-plugin-css/-/jgb-plugin-css-1.6.1.tgz#9b9032edc24546deb81e1382fa59ca3032977db0"
+  integrity sha512-DDThHgYnK04lms06Hw7F9w+QDgm46CZiVv1C1Szi+fummKMHQTD1BbTsugugAXkpG89IFC91LDwGUHcVCWLuIw==
   dependencies:
     chalk "^2.4.1"
     cssnano "^4.0.5"
     debug "^3.1.0"
-    jgb-shared "^1.4.13"
+    jgb-shared "^1.6.1"
     postcss "^7.0.2"
     postcss-modules "^1.3.2"
     postcss-value-parser "^3.3.0"
     semver "^5.5.1"
     tslib "^1.9.3"
 
-jgb-plugin-html@^1.4.13:
-  version "1.4.13"
-  resolved "https://registry.npm.taobao.org/jgb-plugin-html/download/jgb-plugin-html-1.4.13.tgz#0b90cd54c69e054030c22af98edd644e1b1ebeff"
-  integrity sha1-C5DNVMaeBUAwwir5jt1kThsevv8=
+jgb-plugin-html@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-plugin-html/-/jgb-plugin-html-1.6.1.tgz#ad3117c666ca12e7202b8d88bb2baaff18e86237"
+  integrity sha512-RV/iL24xgSuYyj/+pf3WNxltQlMj5ZBtXc//QPqegykDI8ssiIRTNSMy32K7BYp+RHCRWz/u8QgP+wmU7NjbjQ==
   dependencies:
     chalk "^2.4.1"
     htmlnano "^0.1.10"
-    jgb-shared "^1.4.13"
+    jgb-shared "^1.6.1"
     posthtml "^0.11.3"
     posthtml-parser "^0.4.1"
     posthtml-render "^1.1.4"
-    posthtml-transform-miniprogram "^0.4.2"
+    posthtml-transform-miniprogram "^0.5.1"
     tslib "^1.9.3"
 
-jgb-plugin-json@^1.4.13, jgb-plugin-json@^1.5.2:
-  version "1.4.13"
-  resolved "https://registry.npm.taobao.org/jgb-plugin-json/download/jgb-plugin-json-1.4.13.tgz#fb686343ec83cca65e29b572c620f97b9f72c4c2"
-  integrity sha1-+2hjQ+yDzKZeKbVyxiD5e59yxMI=
+jgb-plugin-json@^1.5.2, jgb-plugin-json@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-plugin-json/-/jgb-plugin-json-1.6.1.tgz#1c83518e56e019fc9e4f40bfcf7159b55ef72642"
+  integrity sha512-kY3kM7tgjUyp/UH7Vf2DfwYAYOWp28zvMAkyl0pYz/A2ThM+tbaK6NIgbONMWgTbOSa6FwIp+c2x5XFK7/IJeQ==
   dependencies:
     "@types/json5" "^0.0.30"
     chalk "^2.4.1"
     debug "^3.1.0"
-    jgb-shared "^1.4.13"
+    jgb-shared "^1.6.1"
     json5 "^2.1.0"
     tslib "^1.9.3"
 
 jgb-plugin-less@^1.5.2:
-  version "1.4.13"
-  resolved "https://registry.npm.taobao.org/jgb-plugin-less/download/jgb-plugin-less-1.4.13.tgz#1c3ca392c471ff9c7ac22009c762c3e624481c3d"
-  integrity sha1-HDyjksRx/5x6wiAJx2LD5iRIHD0=
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-plugin-less/-/jgb-plugin-less-1.6.1.tgz#365dd0e68745b190e0ef2bfd6813d3e2c268951f"
+  integrity sha512-ttU7wjgCjwrA5cRAxVy3kSZIypZ9Kpi/zoxsiPB4f4Hz60yIbIlic9U7ogIYDBfbgzdQLqo2KQGq9i99K2X6QQ==
   dependencies:
     "@types/less" "^0.0.34"
     chalk "^2.4.1"
     cssnano "^4.0.5"
     debug "^3.1.0"
-    jgb-plugin-css "^1.4.13"
-    jgb-shared "^1.4.13"
+    jgb-plugin-css "^1.6.1"
+    jgb-shared "^1.6.1"
     less "^3.8.1"
     tslib "^1.9.3"
 
 jgb-plugin-typescript@^1.5.2:
-  version "1.5.0"
-  resolved "https://registry.npm.taobao.org/jgb-plugin-typescript/download/jgb-plugin-typescript-1.5.0.tgz#76a8a664cf3e55c5c5a19e8b7756d0e87f60e4f7"
-  integrity sha1-dqimZM8+VcXFoZ6Ld1bQ6H9g5Pc=
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-plugin-typescript/-/jgb-plugin-typescript-1.6.1.tgz#a5eea9443a26aacf73afb92abf3664cdcda60a17"
+  integrity sha512-zrPJb5gZhaXjf9mOk8G5ZHTkEHmQA7P78PbdgGjiyYUbxWNyuC4jT8BMbIUnrkwMIJ9X9MqGAfRoB5/dPHTJbg==
   dependencies:
     chalk "^2.4.1"
     debug "^3.1.0"
-    jgb-plugin-babel "^1.4.13"
-    jgb-shared "^1.4.13"
+    jgb-plugin-babel "^1.6.1"
+    jgb-shared "^1.6.1"
     tslib "^1.9.3"
     typescript "3.0.1"
 
 jgb-preset-weapp@^1.5.2:
-  version "1.5.0"
-  resolved "https://registry.npm.taobao.org/jgb-preset-weapp/download/jgb-preset-weapp-1.5.0.tgz#399fc94514c1f08ee87039dcbb8476e509e24787"
-  integrity sha1-OZ/JRRTB8I7ocDncu4R25QniR4c=
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-preset-weapp/-/jgb-preset-weapp-1.6.1.tgz#fe6ea839cc911b36fed98d286af8b407a6c5fc1f"
+  integrity sha512-GX+TQpSjz7pYK2gq4k/FHkzg4j/JZhqE7VDhpUQcQYRMihSFhkdwRbHc4WJDRebfvMVDN1h6CU+7u2c/SpCd4w==
   dependencies:
     chalk "^2.4.1"
     debug "^3.1.0"
     fast-glob "^2.2.2"
-    jgb-plugin-babel "^1.4.13"
-    jgb-plugin-css "^1.4.13"
-    jgb-plugin-html "^1.4.13"
-    jgb-plugin-json "^1.4.13"
-    jgb-shared "^1.4.13"
+    jgb-plugin-babel "^1.6.1"
+    jgb-plugin-css "^1.6.1"
+    jgb-plugin-html "^1.6.1"
+    jgb-plugin-json "^1.6.1"
+    jgb-shared "^1.6.1"
     tslib "^1.9.3"
 
-jgb-shared@^1.4.13:
-  version "1.4.13"
-  resolved "https://registry.npm.taobao.org/jgb-shared/download/jgb-shared-1.4.13.tgz#92bf8cf6d40dd7e3902012c3cbcbd30e6a2403f6"
-  integrity sha1-kr+M9tQN1+OQIBLDy8vTDmokA/Y=
+jgb-shared@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/jgb-shared/-/jgb-shared-1.6.1.tgz#3ea3c54a43ac43672a538dbfb3b97cbb1aa27c00"
+  integrity sha512-VseNUh4fXW33C3sIdR1ETqkLzIEa3yDcv1AGqs8OzWGFSG29VCOFeWZAwckmGja0AZbnZLfybvlz+V5ORNoyJQ==
   dependencies:
     "@types/glob" "^5.0.35"
     "@types/lodash" "^4.14.117"
@@ -2628,10 +2628,10 @@ loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-lodash-es@^4.17.10:
-  version "4.17.11"
-  resolved "https://registry.npm.taobao.org/lodash-es/download/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
-  integrity sha1-FFq0p6xcXlKjUx+08xAlWhUrS+A=
+lodash-es@^4.17.14:
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.14.tgz#12a95a963cc5955683cee3b74e85458954f37ecc"
+  integrity sha512-7zchRrGa8UZXjD/4ivUWP1867jDkhzTG2c/uj739utSd7O/pFFdxspCemIFKEEjErbcqRzn8nKnGsi7mvTgRPA==
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -2745,10 +2745,10 @@ mime@^1.4.1:
   resolved "https://registry.npm.taobao.org/mime/download/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=
 
-miniapp-adapter@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.npm.taobao.org/miniapp-adapter/download/miniapp-adapter-1.5.2.tgz#4bc7bbbf84afa4feb7ae04c2eaf418d469b68ad7"
-  integrity sha1-S8e7v4SvpP63rgTC6vQY1Gm2itc=
+miniapp-adapter@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/miniapp-adapter/-/miniapp-adapter-1.6.2.tgz#57d4122e6a6a5654fa5e653cb7cb7c9dc0e9b0bb"
+  integrity sha512-uPTnhG0SJvD9XuxAvwvOYfpHTEyh+oqsELMpTj7jNtnKX74K9CvYNgu5swBG+e7bCgMHqi4Xd4rfxUhrYgeGGA==
   dependencies:
     miniapp-regenerator-runtime "^1.0.0"
 
@@ -3651,10 +3651,10 @@ posthtml-render@^1.1.0, posthtml-render@^1.1.4:
   resolved "https://registry.npm.taobao.org/posthtml-render/download/posthtml-render-1.1.4.tgz#95dac09892f4f183fad5ac823f08f42c0256551e"
   integrity sha1-ldrAmJL08YP61ayCPwj0LAJWVR4=
 
-posthtml-transform-miniprogram@^0.4.2:
-  version "0.4.3"
-  resolved "https://registry.npm.taobao.org/posthtml-transform-miniprogram/download/posthtml-transform-miniprogram-0.4.3.tgz#a49b541f867f8b3725b3c8f813a314052e9f8fb6"
-  integrity sha1-pJtUH4Z/izcls8j4E6MUBS6fj7Y=
+posthtml-transform-miniprogram@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/posthtml-transform-miniprogram/-/posthtml-transform-miniprogram-0.5.1.tgz#4b6b40a0cdbc179aa4818a9d22060df9d46571bd"
+  integrity sha512-5tf5uAnpXcLrRLZFslylTKopcodE42c3mLFh6GhFYIP7IgvrLK11Kr8ntGWdnOVKaN2yYJH4DOztzh6+B9ZGgw==
   dependencies:
     lodash "^4.17.11"
 

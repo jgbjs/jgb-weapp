@@ -14,7 +14,7 @@
     "jgb-plugin-less": "^1.5.2",
     "jgb-plugin-typescript": "^1.5.2",
     "jgb-preset-weapp": "^1.5.2",
-    "lodash-es": "^4.17.10",
+    "lodash-es": "^4.17.14",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
