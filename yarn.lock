@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@tuhu/miniprogram-api-typings@^2.4.2-2.1":
-  version "2.4.2-2.1"
-  resolved "https://registry.npmjs.org/@tuhu/miniprogram-api-typings/-/miniprogram-api-typings-2.4.2-2.1.tgz#05fcc98fca677f57dfbf534b336158dd4dc216d3"
-  integrity sha512-uJggDTndMIChM88ipuOeFB5JHJaqGauiWD84QOdPKK8sM57XCX9vqKjLUR0nDEe8+jOQC4A5qb+GXH3i7wyy+A==
+"@tuhu/miniprogram-api-typings@^2.6.5-2":
+  version "2.6.5-2"
+  resolved "https://registry.npmjs.org/@tuhu/miniprogram-api-typings/-/miniprogram-api-typings-2.6.5-2.tgz#1739d2f91124a5ce26d597fad99b5c0d7aab9180"
+  integrity sha512-BEBIcGgr8Hqf23vRlO0Fnm6m3MN2PFuJT4aLTTPS/wjgd/rSkozMRDn9uyRSKf7tT2A3RAMD065S/AMO7dGVFw==
 
 "@types/jest@^23.3.10":
   version "23.3.14"

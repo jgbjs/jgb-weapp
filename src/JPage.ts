@@ -2,11 +2,11 @@ import { IEventFunction } from '../types/eventbus';
 import JBase from './JBase';
 import expand, { INIT } from './utils/expand';
 
-@expand(Page, 'onLoad')
+@expand('onLoad')
 export default class JPage extends JBase {
   static mixin: (obj: any) => void;
   static intercept: (event: string, fn: IEventFunction) => void;
-  static [INIT]: (...data: any[]) => void;
+  static [INIT]: (...data: any[]) => any;
 
   /**
    * 滚动到指定元素
@@ -30,12 +30,15 @@ export default class JPage extends JBase {
     }
 
     const getRectTopPromise = new Promise<number>(resolve => {
-      query.select(selector).boundingClientRect(rect => {
-        if (!rect) {
-          return resolve(0);
-        }
-        resolve(rect.top);
-      }).exec();
+      query
+        .select(selector)
+        .boundingClientRect(rect => {
+          if (!rect) {
+            return resolve(0);
+          }
+          resolve(rect.top);
+        })
+        .exec();
     });
 
     const realTop = (await getScrollTopPromise) + (await getRectTopPromise);
@@ -51,7 +54,8 @@ export default class JPage extends JBase {
       return new JPage(opts);
     }
 
-    JPage[INIT](opts, this);
+    const options = JPage[INIT](opts, this);
+    Page(options);
   }
 }
 

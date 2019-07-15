@@ -12,14 +12,10 @@ export const INIT = Symbol('INIT');
  * INIT: Symbol('INIT')
  *
  * @export
- * @param {Function} fn
+ * @param {string} interceptEntry 需要拦截的生命周期
  * @returns
  */
-export default function expand(
-  // tslint:disable-next-line:ban-types
-  fn: Function,
-  interceptEntry: string
-) {
+export default function expand(interceptEntry: string) {
   let mixins: any[] = [];
   /** 拦截单个方法  */
   const intercepts = new Map<string, IEventFunction[]>();
@@ -73,7 +69,7 @@ export default function expand(
       tempOpts = Object.getPrototypeOf(tempOpts);
     }
 
-    fn(interceptOptions(opts));
+    return interceptOptions(opts);
   }
 
   // pref: 防止过多页面及mixins需要Mixin，先做一边Mixin
