@@ -10,7 +10,7 @@ type RequestOptions = ArgumentType<typeof jgb.request> & {
   $requestId?: number;
 };
 
-type IRequestTask = ReturnType<typeof wx.request>;
+type IRequestTask = wxNS.RequestTask;
 
 let uuid = 0;
 
@@ -86,10 +86,10 @@ export class RequestQueue {
           } catch {}
           this.next();
         };
-        
+
         const $requestId = options.$requestId;
         const resolveTask = this.readyRequestTasks.get($requestId);
-        const requestTask = wx.request(options);
+        const requestTask = wx.request(options) as IRequestTask;
         if (resolveTask) {
           this.readyRequestTasks.delete($requestId);
           resolveTask(requestTask);
