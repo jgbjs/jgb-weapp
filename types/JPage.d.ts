@@ -79,7 +79,9 @@ interface IJPageConstructor<P extends JPage = JPage> {
    *    }
    *  })
    */
-  mixin(obj: any): void;
+  mixin<Data = Record<string, any>, Method = object, Computed = object>(
+    obj: ThisTypedPageOptionsWithArrayProps<P, Data, Method, Computed>
+  ): void;
   /**
    * 拦截Page某个方法，除了onLoad
    * @example

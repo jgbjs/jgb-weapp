@@ -215,7 +215,20 @@ interface IJComponentConstructor<P extends JComponent = JComponent> {
       Computed
     >
   ): any;
-  mixin(obj: any): void;
+  mixin<
+    Data = Record<string, any>,
+    Methods = object,
+    Props = object,
+    Computed = object
+  >(
+    obj: ThisTypedJComponentOptionsWithArrayProps<
+      P,
+      Data,
+      Methods,
+      Props,
+      Computed
+    >
+  ): void;
   intercept(event: string, fn: IEventFunction): void;
   intercept(fn: IEventFunction): void;
 }
