@@ -1,7 +1,7 @@
 import { IEventFunction } from '../types/eventbus';
 import JBase, { event } from './JBase';
 import { ADD_HIDE_HANDLER, ADD_SHOW_HANDLER, HIDE_HANDLER, SHOW_HANDLER } from './JPage';
-import { isSupportVersion, noop } from './utils';
+import { getCurrentPage, isSupportVersion, noop } from './utils';
 import expand, { INIT } from './utils/expand';
 
 // @ts-ignore
@@ -33,10 +33,13 @@ export default class JComponent {
 JComponent.mixin({
   created() {
     this[event] = [];
+    // 仿支付宝，对组件提供当前页面实例
+    if (!this.$page) {
+      this.$page = getCurrentPage();
+    }
   },
   attached() {
-    const pages = getCurrentPages();
-    const currentPage = pages[pages.length - 1] as any;
+    const currentPage = getCurrentPage();
     if (!currentPage) {
       return;
     }

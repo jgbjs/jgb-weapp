@@ -1,5 +1,6 @@
 import { Accessors } from './common';
 import { IEventFunction } from './eventbus';
+import { JPage, ThisTypedPageOptionsWithArrayProps } from './JPage';
 type DefaultProps = Record<string, any>;
 
 type Prop<T> = (() => T) | { new (...args: any[]): T & object };
@@ -29,6 +30,15 @@ type RecordPropsDefinition<T, U> = { [K in keyof T]: PropValidator<T[K], U> };
 
 type PropsDefinition<T, U> = RecordPropsDefinition<T, U>;
 
+type PageInstance = Required<
+  ThisTypedPageOptionsWithArrayProps<
+    JPage,
+    Record<string, any>,
+    IAnyObject,
+    IAnyObject
+  >
+>;
+
 type CombinedJComponentInstance<
   Instance extends JComponent,
   Data,
@@ -36,7 +46,10 @@ type CombinedJComponentInstance<
   Props,
   Computed
 > = DefaultProps & { data: Data & DefaultProps & Props & Computed } & Instance &
-  Method & { properties: Props };
+  Method & { properties: Props } & {
+    /** 组件所属页面实例  */
+    $page: PageInstance;
+  };
 
 type ThisTypedJComponentOptionsWithArrayProps<
   P extends JComponent,

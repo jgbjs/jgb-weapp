@@ -116,3 +116,9 @@ export function Intercept(
   }
   return base;
 }
+
+export function getCurrentPage() {
+  const pages = getCurrentPages();
+  const currentPage: any = pages.length > 0 ? pages[pages.length - 1] : null;
+  return currentPage;
+}

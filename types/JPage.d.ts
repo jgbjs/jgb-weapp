@@ -56,7 +56,7 @@ type CombinedPageInstance<Instance extends JPage, Data, Method, Computed> = {
   Method &
   IAnyObject;
 
-type ThisTypedPageOptionsWithArrayProps<
+export type ThisTypedPageOptionsWithArrayProps<
   P extends JPage,
   Data extends Record<string, any>,
   Method,
