@@ -231,8 +231,8 @@ interface IJComponentConstructor<P extends JComponent = JComponent> {
   mixin<
     Data = Record<string, any>,
     Methods = object,
-    Props = object,
-    Computed = object
+    Props = IAnyObject,
+    Computed = IAnyObject
   >(
     obj: ThisTypedJComponentOptionsWithArrayProps<
       P,
