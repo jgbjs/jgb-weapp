@@ -4,10 +4,22 @@ import { IEventFunction, INewEventBus } from './eventbus';
 interface IAppOptions<P extends JApp = JApp, Data = DefaultData<P>>
   extends App.AppInstance<Data> {}
 
-export interface JApp extends Required<App.AppInstance>, INewEventBus {}
+type CombinedAppInstance<Instance extends JApp, Method> = Instance &
+  Method &
+  IAnyObject;
 
-interface IJAppConstructor extends App.AppConstructor {
-  mixin(obj: App.AppInstance & IAnyObject): void;
+type ThisTypedAppOptions<P extends JApp, Method> = IAppOptions<P, Method> &
+  Method &
+  ThisType<CombinedAppInstance<P, Method>>;
+
+export interface JApp extends Required<App.AppInstance>, INewEventBus {
+  /** app onLauch or onShow 时参数  */
+  readonly $appOptions: App.ILaunchShowOption;
+}
+
+interface IJAppConstructor<P extends JApp = JApp> {
+  <Method = object>(options: ThisTypedAppOptions<P, Method>): void;
+  mixin<Method = object>(obj: ThisTypedAppOptions<P, Method>): void;
   intercept(event: string, fn: IEventFunction): void;
   intercept(fn: IEventFunction): void;
 }

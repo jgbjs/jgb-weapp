@@ -5,7 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "watch":"jgb build -w"
+    "watch": "jgb build -w",
+    "build": "jgb build"
   },
   "dependencies": {
     "jgb-plugin-babel": "^1.5.2",

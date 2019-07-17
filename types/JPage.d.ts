@@ -37,7 +37,10 @@ export interface JPage
     fullPath: string;
     name: string;
   };
+  /** vue-router  */
   readonly $router: typeof Router;
+  /** 打开当前页面路径中的参数 */
+  readonly $options: IAnyObject;
   /**
    * @deprecated 请使用route但须考虑兼容
    */

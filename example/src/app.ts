@@ -4,6 +4,9 @@ JPage.mixin({
   onLoad(options) {
     this.$scrollIntoView('#test');
     this.test();
+    setTimeout(() => {
+      console.log('test $options', this.$options);
+    }, 10);
   },
   test() {}
 });
@@ -22,7 +25,18 @@ JComponent.mixin({
 });
 
 JApp.mixin({
-  onLaunch() {}
+  data: '',
+  acb() {
+    console.log(this.data);
+  }
 });
 
-JApp({});
+JApp({
+  data: {},
+  onLaunch() {
+    console.log('test $appOptions', this.$appOptions);
+  },
+  cust() {
+    console.log(this.data);
+  }
+});

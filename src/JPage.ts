@@ -81,6 +81,14 @@ type AnyFunction = (...args: any[]) => any;
 JPage.mixin({
   [ADD_SHOW_HANDLER]: handlerFactory(SHOW_HANDLER),
   [ADD_HIDE_HANDLER]: handlerFactory(HIDE_HANDLER),
+  onLoad(options: any) {
+    this.$options = options;
+    Object.defineProperty(this, '$appOptions', {
+      get() {
+        return getApp().$appOptions;
+      }
+    });
+  },
   onShow() {
     invokeHandler(SHOW_HANDLER, this);
   },
