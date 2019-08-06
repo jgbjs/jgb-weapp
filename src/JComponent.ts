@@ -1,16 +1,22 @@
 import { IEventFunction } from '../types/eventbus';
 import JBase, { event } from './JBase';
-import { ADD_HIDE_HANDLER, ADD_SHOW_HANDLER, HIDE_HANDLER, SHOW_HANDLER } from './JPage';
+import {
+  ADD_HIDE_HANDLER,
+  ADD_SHOW_HANDLER,
+  HIDE_HANDLER,
+  SHOW_HANDLER
+} from './JPage';
 import { getCurrentPage, isSupportVersion, noop } from './utils';
 import expand, { INIT } from './utils/expand';
 
 // @ts-ignore
 @expand('created')
-export default class JComponent {
+export default class JComponent extends JBase {
   static mixin: (obj: any) => void;
   static intercept: (event: string, fn: IEventFunction) => void;
   static [INIT]: (...data: any[]) => any;
   constructor(opts?: any) {
+    super();
     if (!(this instanceof JComponent)) {
       return new JComponent(opts);
     }

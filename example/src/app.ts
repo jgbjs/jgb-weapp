@@ -12,6 +12,14 @@ JPage.mixin({
 });
 
 JComponent.mixin({
+  data: {
+    a: 1
+  },
+  computed: {
+    aplus(): number {
+      return this.data.a + 1;
+    }
+  },
   attached() {
     this.test();
     const test = this.$page.data.dads;
