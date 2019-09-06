@@ -50,7 +50,8 @@ export function Compute(opts: any) {
 
       // 追加 observer，用于监听变动
       properties[key].observer = function(...args: any[]) {
-        const originalSetData = this[setData];
+        // 优先使用原生setData
+        const originalSetData = this[setData] || this.setData;
         
         // 调用 setData 设置 properties
         if (this[doingSetProps]) {
