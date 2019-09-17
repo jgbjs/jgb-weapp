@@ -22,10 +22,6 @@ JComponent.mixin({
   },
   attached() {
     this.test();
-    const test = this.$page.data.dads;
-    this.$page.setData({
-      test: 'test' + test
-    });
   },
   methods: {
     test() {}

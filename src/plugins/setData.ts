@@ -10,11 +10,11 @@ const setDataPlugin: IPlugin = {
   install(res) {
     const { JComponent, JPage } = res;
 
-    JComponent.mixin({
-      created() {
-        setDataPerformance.call(this);
-      }
-    });
+    // JComponent.mixin({
+    //   created() {
+    //     setDataPerformance.call(this);
+    //   }
+    // });
 
     JPage.mixin({
       onLoad() {
@@ -36,9 +36,10 @@ function setDataPerformance(this: any) {
         this[$MERGE_DATA].push({ data, cb });
         setDataOnPath(this.data, data);
         nextTick(() => {
-          if (this[$MERGE_DATA].length === 0) return;
-          const copies = this[$MERGE_DATA].slice(0);
-          this[$MERGE_DATA].length = 0;
+          if (this[$MERGE_DATA].length === 0) {
+            return;
+          }
+          const copies = copyArrAndClean(this[$MERGE_DATA]);
           const datas = [];
           const cbs = [] as any[];
           const len = copies.length;
@@ -52,9 +53,8 @@ function setDataPerformance(this: any) {
 
           const data = Object.assign({}, ...datas);
           setData(data, () => {
-            const copies = cbs.slice(0);
-            const len = cbs.length;
-            cbs.length = 0;
+            const copies = copyArrAndClean(cbs);
+            const len = copies.length;
             let i = 0;
             while (i < len) {
               try {
@@ -71,10 +71,16 @@ function setDataPerformance(this: any) {
   });
 }
 
+function copyArrAndClean(arr: any[]) {
+  const copies = arr.slice(0);
+  arr.length = 0;
+  return copies;
+}
+
 function setDataOnPath(ctx: any, data: any = {}) {
-  for(const path of Object.keys(data)) {
+  for (const path of Object.keys(data)) {
     const value = data[path];
-    set(ctx, path , value);
+    set(ctx, path, value);
   }
 }
 

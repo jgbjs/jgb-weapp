@@ -52,7 +52,7 @@ export function Compute(opts: any) {
       properties[key].observer = function(...args: any[]) {
         // 优先使用原生setData
         const originalSetData = this[setData] || this.setData;
-        
+
         // 调用 setData 设置 properties
         if (this[doingSetProps]) {
           if (oldObserver) {
@@ -63,7 +63,7 @@ export function Compute(opts: any) {
 
         if (this[doingSetData]) {
           // eslint-disable-next-line no-console
-          console.warn("can't call setData in computed getter function!");
+          // console.warn("can't call setData in computed getter function!");
           return;
         }
 
@@ -72,8 +72,10 @@ export function Compute(opts: any) {
         // 计算 computed
         const needUpdate = calcComputed(this, computed, computedKeys);
 
-        // 做 computed 属性的 setData
-        originalSetData.call(this, needUpdate);
+        if (Object.keys(needUpdate).length > 0) {
+          // 做 computed 属性的 setData
+          originalSetData.call(this, needUpdate);
+        }
 
         this[doingSetData] = false;
 
@@ -104,18 +106,17 @@ export function Compute(opts: any) {
 
       if (this[doingSetData]) {
         // eslint-disable-next-line no-console
-        console.warn("can't call setData in computed getter function!");
+        // console.warn("can't call setData in computed getter function!");
         return;
       }
 
       this[doingSetData] = true;
 
-      // TODO 过滤掉 data 中的 computed 字段
       const dataKeys = Object.keys(data);
       for (let i = 0, len = dataKeys.length; i < len; i++) {
         const key = dataKeys[i];
 
-        if (computed[key]) {
+        if (typeof computed[key] !== 'undefined') {
           delete data[key];
         }
         if (!this[doingSetProps] && propertyKeys.indexOf(key) >= 0) {
@@ -129,8 +130,10 @@ export function Compute(opts: any) {
       // 计算 computed
       const needUpdate = calcComputed(this, computed, computedKeys);
 
-      // 做 computed 属性的 setData
-      originalSetData.call(this, needUpdate);
+      if (Object.keys(needUpdate).length > 0) {
+        // 做 computed 属性的 setData
+        originalSetData.call(this, needUpdate);
+      }
 
       this[doingSetData] = false;
       this[doingSetProps] = false;
@@ -139,8 +142,11 @@ export function Compute(opts: any) {
 }
 
 export function calcComputed(scope: any, computed: any, keys: any[]) {
-  const needUpdate: any = {};
   const computedKeys = [].concat(keys);
+  if (computedKeys.length === 0) {
+    return {};
+  }
+  const needUpdate: any = {};
   const callTree = new CallTree();
 
   // 修复当没有this.data时会报错

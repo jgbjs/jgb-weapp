@@ -1,12 +1,14 @@
 import { IEventFunction } from '../types/eventbus';
+import JApp from './JApp';
 import JBase, { event } from './JBase';
+import { getCurrentPage, isSupportVersion, noop } from './utils';
 import {
   ADD_HIDE_HANDLER,
   ADD_SHOW_HANDLER,
+  ALL_COMPONENTS,
   HIDE_HANDLER,
   SHOW_HANDLER
-} from './JPage';
-import { getCurrentPage, isSupportVersion, noop } from './utils';
+} from './utils/const';
 import expand, { INIT } from './utils/expand';
 
 // @ts-ignore
@@ -36,16 +38,25 @@ export default class JComponent extends JBase {
   }
 }
 
+function addComponentToPage(component: any) {
+  // 仿支付宝，对组件提供当前页面实例
+  if (!component.$page) {
+    component.$page = getCurrentPage();
+  }
+  if(component.$page) {
+    component.$page[ALL_COMPONENTS] = component.$page[ALL_COMPONENTS] || new Set();
+    component.$page[ALL_COMPONENTS].add(component);
+  }  
+}
+
 JComponent.mixin({
   created() {
     this[event] = [];
-    // 仿支付宝，对组件提供当前页面实例
-    if (!this.$page) {
-      this.$page = getCurrentPage();
-    }
+    addComponentToPage(this);
   },
   attached() {
-    const currentPage = getCurrentPage();
+    addComponentToPage(this);
+    const currentPage = this.$page;
     if (!currentPage) {
       return;
     }
@@ -57,6 +68,7 @@ JComponent.mixin({
     }
   },
   detached() {
+    this.$page[ALL_COMPONENTS].delete(this);
     this.$destory();
   }
 });

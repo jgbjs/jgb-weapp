@@ -1,6 +1,13 @@
+import {
+  ADD_HIDE_HANDLER,
+  ADD_SHOW_HANDLER,
+  HIDE_HANDLER,
+  SHOW_HANDLER
+} from 'utils/const';
 import { IEventFunction } from '../types/eventbus';
 import JBase from './JBase';
 import expand, { INIT } from './utils/expand';
+import { ALL_COMPONENTS } from './utils/const';
 
 @expand('onLoad')
 export default class JPage extends JBase {
@@ -59,13 +66,6 @@ export default class JPage extends JBase {
   }
 }
 
-export const ADD_SHOW_HANDLER = 'ADD_SHOW_HANDLER';
-export const ADD_HIDE_HANDLER = 'ADD_HIDE_HANDLER';
-
-/** register hook store name 兼容Component pageLifetimes */
-export const SHOW_HANDLER = 'PAGE_LIFE_SHOW';
-export const HIDE_HANDLER = 'PAGE_LIFE_HIDE';
-
 type AnyFunction = (...args: any[]) => any;
 
 /**
@@ -83,6 +83,7 @@ JPage.mixin({
   [ADD_HIDE_HANDLER]: handlerFactory(HIDE_HANDLER),
   onLoad(options: any) {
     this.$options = options;
+    this[ALL_COMPONENTS] = this[ALL_COMPONENTS] || new Set();
     Object.defineProperty(this, '$appOptions', {
       get() {
         return getApp().$appOptions;
