@@ -3,12 +3,17 @@ import { IEventFunction, INewEventBus } from './eventbus';
 import { Router } from './router';
 
 type DefaultComputed = { [key: string]: any };
+type IAnyObject = wxNS.IAnyObject;
+
+type WxPageOptions = Partial<wxNS.Page.ILifetime>;
+type ISetData = wxNS.Component.InstanceMethods<any>['setData'];
 
 interface IPageOptions<
   P extends JPage = JPage,
   Data = DefaultData<P>,
   Computed = DefaultComputed
-> extends Page.PageInstance<Data> {
+> extends WxPageOptions {
+  data?: Data;
   /**
    * 计算属性, 类似Vue
    * 需要指定方法的类型
@@ -27,7 +32,7 @@ interface IPageOptions<
 }
 
 export interface JPage
-  extends Required<Pick<Page.PageInstanceBaseProps, 'setData' | 'route'>>,
+  extends Required<Pick<wxNS.Page.InstanceProperties, 'is' | 'route'>>,
     INewEventBus {
   readonly $route: {
     path: string;
@@ -51,6 +56,7 @@ export interface JPage
    * @param ctx ctx作用域默认是当前页面
    */
   $scrollIntoView(selector: string, ctx?: any): Promise<any>;
+  setData: ISetData;
 }
 
 type CombinedPageInstance<Instance extends JPage, Data, Method, Computed> = {

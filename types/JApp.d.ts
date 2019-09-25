@@ -1,8 +1,11 @@
 import { DefaultData } from './common';
 import { IEventFunction, INewEventBus } from './eventbus';
 
+type IAnyObject = wxNS.IAnyObject;
+type WxAppOptions = Partial<wxNS.App.Option>;
+
 interface IAppOptions<P extends JApp = JApp, Data = DefaultData<P>>
-  extends App.AppInstance<Data> {}
+  extends WxAppOptions {}
 
 type CombinedAppInstance<Instance extends JApp, Method> = Instance &
   Method &
@@ -10,11 +13,12 @@ type CombinedAppInstance<Instance extends JApp, Method> = Instance &
 
 type ThisTypedAppOptions<P extends JApp, Method> = IAppOptions<P, Method> &
   Method &
+  IAnyObject &
   ThisType<CombinedAppInstance<P, Method>>;
 
-export interface JApp extends Required<App.AppInstance>, INewEventBus {
+export interface JApp extends Required<wxNS.App.Option>, INewEventBus {
   /** app onLauch or onShow 时参数  */
-  readonly $appOptions: App.ILaunchShowOption;
+  readonly $appOptions: wxNS.App.LaunchShowOption;
 }
 
 interface IJAppConstructor<P extends JApp = JApp> {

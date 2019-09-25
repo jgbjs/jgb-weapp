@@ -4,9 +4,9 @@ JComponent({
   data:{
     msg: 'not inited'
   },
-  attached() {
+  attached() {    
     this.setData({
       msg: 'inited'
-    })
+    });
   }
 });

@@ -39,7 +39,7 @@
     "vuepress": "^1.0.3"
   },
   "dependencies": {
-    "@tuhu/miniprogram-api-typings": "^2.6.5-2",
+    "@tuhu/miniprogram-api-typings": "^2.8.3-2",
     "lodash": "^4.17.13",
     "tslib": "^1.9.3"
   },
