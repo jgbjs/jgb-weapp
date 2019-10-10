@@ -7,9 +7,10 @@ import { jgb } from './jgb-api';
 import { JPage } from './JPage';
 import { IUsePlugin } from './plugins';
 import { Router } from './router';
+import * as utils from './utils';
 
 export { Router, JPage, JComponent, JApp };
-export { jgb };
+export { jgb, utils };
 
 export var bus: IEventBus;
 

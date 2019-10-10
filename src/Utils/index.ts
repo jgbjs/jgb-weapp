@@ -2,6 +2,9 @@ import defaultsDeep = require('lodash/defaultsDeep');
 import isFunction = require('lodash/isFunction');
 import isObject = require('lodash/isObject');
 import { IEventFunction } from '../../types/eventbus';
+import { hook } from './hook';
+
+export { hook };
 
 // tslint:disable-next-line:ban-types
 export function promisify<T extends Function>(wxMethod: T) {
@@ -28,10 +31,7 @@ export function Mixin(base: any, mixins: Set<any>) {
       if (typeof baseValue === 'undefined') {
         base[key] = value;
       } else if (isFunction(value) && isFunction(baseValue)) {
-        base[key] = function(...data: any[]) {
-          value.apply(this, data);
-          baseValue.apply(this, data);
-        };
+        hook(base, key, value);
       } else if (isObject(baseValue) && isObject(value)) {
         defaultsDeep(baseValue, value);
       } else if (Array.isArray(baseValue) && Array.isArray(value)) {

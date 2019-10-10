@@ -31,9 +31,7 @@ interface IPageOptions<
   computed?: Accessors<Computed>;
 }
 
-export interface JPage
-  extends Required<Pick<wxNS.Page.InstanceProperties, 'is' | 'route'>>,
-    INewEventBus {
+interface IPageInstanceExt {
   readonly $route: {
     path: string;
     params: any;
@@ -58,6 +56,11 @@ export interface JPage
   $scrollIntoView(selector: string, ctx?: any): Promise<any>;
   setData: ISetData;
 }
+
+export interface JPage
+  extends Required<Pick<wxNS.Page.InstanceProperties, 'is' | 'route'>>,
+    INewEventBus,
+    IPageInstanceExt {}
 
 type CombinedPageInstance<Instance extends JPage, Data, Method, Computed> = {
   data: Data & Computed;

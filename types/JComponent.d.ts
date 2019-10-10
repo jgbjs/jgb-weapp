@@ -29,7 +29,7 @@ type PropValidator<T, U> = PropOptions<T, U> | Prop<T> | Array<Prop<T>>;
 
 type RecordPropsDefinition<T, U> = { [K in keyof T]: PropValidator<T[K], U> };
 
-type PropsDefinition<T, U> = RecordPropsDefinition<T, U>;
+export type PropsDefinition<T, U> = RecordPropsDefinition<T, U>;
 
 type PageInstance = Required<
   ThisTypedPageOptionsWithArrayProps<
@@ -40,17 +40,20 @@ type PageInstance = Required<
   >
 >;
 
+/** 组件实例扩展 */
+interface IComponentInstanceExt<Data, Props, Computed> {
+  /** 组件所属页面实例  */
+  $page: PageInstance;
+}
+
 type CombinedJComponentInstance<
   Instance extends JComponent,
   Data,
   Method,
   Props,
   Computed
-> = DefaultProps & { data: Data & DefaultProps & Props & Computed } & Instance &
-  Method & { properties: Props } & {
-    /** 组件所属页面实例  */
-    $page: PageInstance;
-  };
+> = DefaultProps & { data: Data & Props & Computed } & Instance &
+  Method & { properties: Props } & IComponentInstanceExt<Data, Props, Computed>;
 
 type ThisTypedJComponentOptionsWithArrayProps<
   P extends JComponent,
@@ -77,7 +80,7 @@ type WxComponentOptions = Partial<wxNS.Component.OtherOption> &
 /**
  * JComponent 实现的接口对象
  */
-interface JComponentOptions<P, Data, Methods, Props, Computed, Instance>
+export interface JComponentOptions<P, Data, Methods, Props, Computed, Instance>
   extends WxComponentOptions {
   /**
    * 开发者可以添加任意的函数或数据到 object 参数中，
@@ -199,7 +202,20 @@ interface IJComponentConstructor<P extends JComponent = JComponent> {
       Computed
     >
   ): void;
+  /**
+   * 拦截Component某个方法，除了created
+   * @example
+   *  JComponent.intercept('tap', () => {})
+   */
   intercept(event: string, fn: IEventFunction): void;
+  /**
+   * 拦截整个Component的参数
+   * @example
+   *  JComponent.intercept(function(opts){
+   *    opts.created = () => {}
+   *    return opts;
+   *  })
+   */
   intercept(fn: IEventFunction): void;
 }
 
