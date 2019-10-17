@@ -1,5 +1,4 @@
 import { IEventFunction } from '../types/eventbus';
-import JApp from './JApp';
 import JBase, { event } from './JBase';
 import { getCurrentPage, isSupportVersion, noop } from './utils';
 import {

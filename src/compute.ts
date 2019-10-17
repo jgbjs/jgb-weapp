@@ -101,6 +101,7 @@ export function Compute(opts: any) {
       }
     });
 
+    // tslint:disable-next-line: no-shadowed-variable
     function _setData(data: any, callback: any) {
       const originalSetData = this[setData];
 

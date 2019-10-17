@@ -1,13 +1,13 @@
+import { IEventFunction } from '../types/eventbus';
+import JBase from './JBase';
 import {
   ADD_HIDE_HANDLER,
   ADD_SHOW_HANDLER,
+  ALL_COMPONENTS,
   HIDE_HANDLER,
-  SHOW_HANDLER
-} from 'utils/const';
-import { IEventFunction } from '../types/eventbus';
-import JBase from './JBase';
+  SHOW_HANDLER,
+} from './utils/const';
 import expand, { INIT } from './utils/expand';
-import { ALL_COMPONENTS } from './utils/const';
 
 @expand('onLoad')
 export default class JPage extends JBase {
