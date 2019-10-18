@@ -1,6 +1,7 @@
 import { Accessors, DefaultData } from './common';
 import { IEventFunction, INewEventBus } from './eventbus';
 import { Router } from './router';
+import { JBase } from './JBase';
 
 type DefaultComputed = { [key: string]: any };
 type IAnyObject = wxNS.IAnyObject;
@@ -60,6 +61,7 @@ interface IPageInstanceExt {
 export interface JPage
   extends Required<Pick<wxNS.Page.InstanceProperties, 'is' | 'route'>>,
     INewEventBus,
+    JBase,
     IPageInstanceExt {}
 
 type CombinedPageInstance<Instance extends JPage, Data, Method, Computed> = {

@@ -1,6 +1,8 @@
 import { Accessors } from './common';
-import { IEventFunction } from './eventbus';
+import { IEventFunction, INewEventBus } from './eventbus';
 import { JPage, ThisTypedPageOptionsWithArrayProps } from './JPage';
+import { JBase } from './JBase';
+
 type DefaultProps = Record<string, any>;
 type IAnyObject = wxNS.IAnyObject;
 
@@ -53,7 +55,7 @@ type CombinedJComponentInstance<
   Props,
   Computed
 > = DefaultProps & { data: Data & Props & Computed } & Instance &
-  Method & { properties: Props } & IComponentInstanceExt<Data, Props, Computed>;
+  Method & { properties: Props } & IComponentInstanceExt<Data, Props, Computed> & INewEventBus & JBase;
 
 type ThisTypedJComponentOptionsWithArrayProps<
   P extends JComponent,

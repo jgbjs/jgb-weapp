@@ -2,3 +2,4 @@
   <slot></slot>
   <view>{{msg}}</view>
 </view>
+<navgator url="/pages/test-lazy-load/index">pages/test-lazy-load/index</navgator>

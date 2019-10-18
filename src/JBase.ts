@@ -3,6 +3,8 @@ import { bus } from './EventBus';
 import nextTick from './utils/nextTick';
 
 export const event = '$events$';
+export const setTimeoutCollection = '$setTimeout$';
+export const setIntervalCollection = '$setInterval$';
 
 export default class JBase {
   /* 当前绑定事件集合 */
@@ -11,9 +13,14 @@ export default class JBase {
     fn: IEventFunction;
   }>;
 
+  private [setTimeoutCollection]: Set<number>;
+  private [setIntervalCollection]: Set<number>;
+
   constructor() {
     if (this) {
       this[event] = [];
+      this[setTimeoutCollection] = new Set();
+      this[setIntervalCollection] = new Set();
     }
   }
 
@@ -45,6 +52,18 @@ export default class JBase {
     bus.off(evtName, fn);
   }
 
+  $setTimeout(fn: IEventFunction, timeout = 0) {
+    const id: number = setTimeout(fn, timeout) as any;
+    this[setTimeoutCollection].add(id);
+    return id;
+  }
+
+  $setInterval(fn: IEventFunction, timeout = 0) {
+    const id: number = setInterval(fn, timeout) as any;
+    this[setIntervalCollection].add(id);
+    return id;
+  }
+
   /* 清除所有当前绑定的事件 */
   $destory() {
     const events = this[event];
@@ -56,5 +75,7 @@ export default class JBase {
       }
     });
     this[event] = [];
+    this[setTimeoutCollection].forEach(id => clearTimeout(id));
+    this[setIntervalCollection].forEach(id => clearInterval(id));
   }
 }

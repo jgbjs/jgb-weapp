@@ -9,6 +9,7 @@ import {
   SHOW_HANDLER
 } from './utils/const';
 import expand, { INIT } from './utils/expand';
+import { hook } from './utils/hook';
 
 // @ts-ignore
 @expand('created')
@@ -30,6 +31,9 @@ export default class JComponent extends JBase {
         [HIDE_HANDLER]: hide
       });
     }
+    hook(opts, 'created', function() {
+      JBase.call(this);
+    })
     opts.methods = Object.assign({}, opts.methods, JBase.prototype);
 
     const options = JComponent[INIT](opts);
@@ -50,7 +54,6 @@ function addComponentToPage(component: any) {
 
 JComponent.mixin({
   created() {
-    this[event] = [];
     addComponentToPage(this);
   },
   attached() {
