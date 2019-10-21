@@ -89,3 +89,40 @@ JPage({
 ### \$destory
 
 清除所有当前绑定的事件，在`页面`或者`组件`销毁时会自动调用。
+
+### $setTimeout
+
+`v1.6.0`起
+
+`setTimeout`定时器, 在`页面`或者`组件`销毁时清空。
+
+```ts
+JPage({
+  onTap() {
+    this.$setTimeout(()=>{
+      console.log(this.data)
+    }, 300)
+  }
+})
+```
+
+
+
+### $setInterval
+
+`v1.6.0`起
+
+`setInterval`定时器, 在`页面`或者`组件`销毁时清空。
+
+```ts
+JComponent({
+  methods: {
+    onTap() {
+      this.$setInterval(()=>{
+        console.log(this.data)
+      }, 500)
+    }
+  }
+})
+```
+
