@@ -4,7 +4,7 @@ const p = Promise.resolve();
 let timerFunc: any = () => {
   p.then(flushCallbacks);
 };
-if (typeof wx.nextTick !== 'undefined') {
+if (typeof wx.nextTick === 'function') {
   timerFunc = () => wx.nextTick(flushCallbacks);
 }
 

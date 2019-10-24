@@ -190,7 +190,7 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
   return needUpdate;
 }
 
-const cacheContainsComputekey = new Map();
+const cacheContainsComputekey = new WeakMap();
 
 /**
  * 获取computed中包含的其他computed的key
@@ -221,5 +221,6 @@ export function fnContainsComputeKey(fn: any, computed: any): Set<string> {
     matchComputeKeys.add(matches[2]);
   }
 
+  cacheContainsComputekey.set(fn, matchComputeKeys);
   return matchComputeKeys;
 }

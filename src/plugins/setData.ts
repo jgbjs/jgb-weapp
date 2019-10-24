@@ -10,6 +10,7 @@ const setDataPlugin: IPlugin = {
   install(res) {
     const { JComponent, JPage } = res;
 
+    // JComponent 测试下来可能会导致负优化
     // JComponent.mixin({
     //   created() {
     //     setDataPerformance.call(this);
@@ -24,8 +25,9 @@ const setDataPlugin: IPlugin = {
   }
 };
 
+const $MERGE_DATA = Symbol('$merge_data');
+
 function setDataPerformance(this: any) {
-  const $MERGE_DATA = Symbol('$merge_data');
   const setData = this.setData.bind(this);
   this[$MERGE_DATA] = [];
 
@@ -44,6 +46,7 @@ function setDataPerformance(this: any) {
           const cbs = [] as any[];
           const len = copies.length;
           for (let i = 0; i < len; i++) {
+            // tslint:disable-next-line: no-shadowed-variable
             const { data, cb } = copies[i];
             datas.push(data);
             if (typeof cb === 'function') {
@@ -51,14 +54,14 @@ function setDataPerformance(this: any) {
             }
           }
 
-          const data = Object.assign({}, ...datas);
-          setData(data, () => {
-            const copies = copyArrAndClean(cbs);
-            const len = copies.length;
+          const d = Object.assign({}, ...datas);
+          setData(d, () => {
+            const callbacks = copyArrAndClean(cbs);
+            const l = callbacks.length;
             let i = 0;
-            while (i < len) {
+            while (i < l) {
               try {
-                copies[i]();
+                callbacks[i]();
               } catch (error) {
                 console.error(error);
               }
