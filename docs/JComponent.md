@@ -58,8 +58,48 @@ JComponent({
 });
 ```
 
+### watch
+
+监听数据变化, 与 `Component.observers`一样。
+
+https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/observer.html
+
+```ts
+import { JComponent } from 'jgb-weapp';
+
+JComponent({
+  data: {
+    d: {
+      idx: 1
+    }
+  },
+  watch: {
+    ['d.**'](d) {
+      // 相应 this.data.d 的数据变化
+      console.log(d);
+    }
+  }，
+  methods: {
+  	onChange() {
+  		this.setData({
+        d: {
+          idx: 2
+        }
+      });
+  
+  		this.setData({
+        'd.idx': 3
+      })
+		}
+	}
+})
+```
+
+
+
 ## 扩展属性
 
 ### \$page
 
 组件所属页面的实例，通过`getCurrentPages()`实现。
+

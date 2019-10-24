@@ -77,6 +77,46 @@ JPage.intercept(opts => {
 });
 ```
 
+### computed
+
+自动计算属性，类似 Vue.computed. [参考Compoonent](./JComponent.md#computed)
+
+```ts
+import { JPage } from 'jgb-weapp'
+
+JPage({
+  data: {
+    i: 1
+  },
+  computed: {
+    add() {
+      return this.data.a + 1;
+    }
+  }
+})
+```
+
+### watch
+
+数据监听。 [参考Component](./JComponent.md#watch)
+
+```ts
+import { JPage } from 'jgb-weapp'
+
+JPage({
+  data: {
+    i: 1
+  },
+  watch: {
+    ['i.*'](i) {
+      console.log('i')
+    }
+  }
+})
+```
+
+
+
 ## 扩展属性
 
 ### \$scrollIntoView
@@ -95,10 +135,31 @@ JPage({
 });
 ```
 
-- \$options
+### \$options
 
 `Page.onLoad`时`options`
 
-- \$appOptions
+```ts
+import { JPage } from 'jgb-weapp';
+
+JPage({
+  onClick() {
+    this.$options;
+  }
+});
+```
+
+### \$appOptions
 
 `getApp().$appOptions`
+
+```ts
+import { JPage } from 'jgb-weapp';
+
+JPage({
+  onClick() {
+    this.$appOptions;
+  }
+});
+```
+

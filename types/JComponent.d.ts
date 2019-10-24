@@ -55,7 +55,13 @@ type CombinedJComponentInstance<
   Props,
   Computed
 > = DefaultProps & { data: Data & Props & Computed } & Instance &
-  Method & { properties: Props } & IComponentInstanceExt<Data, Props, Computed> & INewEventBus & JBase;
+  Method & { properties: Props } & IComponentInstanceExt<
+    Data,
+    Props,
+    Computed
+  > &
+  INewEventBus &
+  JBase;
 
 type ThisTypedJComponentOptionsWithArrayProps<
   P extends JComponent,
@@ -117,6 +123,21 @@ export interface JComponentOptions<P, Data, Methods, Props, Computed, Instance>
    * @memberof JComponentOptions
    */
   computed?: Accessors<Computed>;
+  /**
+   * 监听属性变化
+   * 使用方法与 Component[observers] 一样
+   * @example
+  ```js
+  {
+    watch: {
+      '[some.field.**'](field) {
+
+      }
+    }
+  }
+  ```
+   */
+  watch?: IAnyObject;
   /**
    * 组件的内部数据，和 properties 一同用于组件的模版渲染
    *

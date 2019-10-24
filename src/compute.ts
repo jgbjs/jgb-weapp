@@ -1,4 +1,7 @@
+import get from 'lodash/get';
+import { IEventFunction } from '../types/eventbus';
 import { CallNode, CallTree } from './utils/calltree';
+import { match } from './utils/match';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 const cache = Symbol(`cache`);
@@ -11,6 +14,7 @@ const doingSetProps = Symbol(`doingSetProps`);
  */
 export function Compute(opts: any) {
   const computed = opts.computed || {};
+  const watch = opts.watch || {};
   const data = opts.data || {};
   const properties = opts.properties || {};
 
@@ -74,7 +78,9 @@ export function Compute(opts: any) {
 
         if (Object.keys(needUpdate).length > 0) {
           // 做 computed 属性的 setData
-          originalSetData.call(this, needUpdate);
+          originalSetData.call(this, needUpdate, () =>
+            callWatch(this, needUpdate, watch)
+          );
         }
 
         this[doingSetData] = false;
@@ -94,6 +100,12 @@ export function Compute(opts: any) {
     scope[setData] = scope.setData;
     scope[doingSetData] = false;
     scope[doingSetProps] = false;
+    Object.defineProperty(scope, '$watch', {
+      get() {
+        return addWatch;
+      }
+    });
+
     Object.defineProperty(scope, 'setData', {
       configurable: true,
       get() {
@@ -126,7 +138,12 @@ export function Compute(opts: any) {
       }
 
       // 做 data 属性的 setData
-      originalSetData.call(this, data, callback);
+      originalSetData.call(this, data, () => {
+        callWatch(this, data, watch);
+        if (typeof callback === 'function') {
+          callback.call(this);
+        }
+      });
 
       // 计算 computed
       const needUpdate = calcComputed(this, computed, computedKeys);
@@ -140,6 +157,44 @@ export function Compute(opts: any) {
       this[doingSetProps] = false;
     }
   };
+
+  function addWatch(key: string, fn: IEventFunction) {
+    if (watch[key]) {
+      console.warn(`Watch中已经存在 ${key}, 原有将被覆盖`);
+    }
+
+    watch[key] = fn;
+  }
+}
+
+/**
+ * 通知 watch改变
+ */
+export function callWatch(scope: any, updateData: any = {}, watch: any = {}) {
+  const watchKeys = Object.keys(watch);
+  const updateKeys = Object.keys(updateData);
+
+  for (const watchkey of watchKeys) {
+    // 可能有这种情况： number1, number2
+    const subkeys = watchkey.split(',').map(key => `${key}`.trim());
+    for (const updatekey of updateKeys) {
+      // 一次 setData 最多触发每个监听器一次
+      if (match(subkeys, updatekey)) {
+        const fn = watch[watchkey];
+        fn.apply(
+          scope,
+          subkeys.map(key => {
+            const getPath = key.replace(/\.*\*{2}/, '');
+            if (getPath === '') {
+              return scope.data;
+            }
+            return get(scope.data, getPath);
+          })
+        );
+        break;
+      }
+    }
+  }
 }
 
 export function calcComputed(scope: any, computed: any, keys: any[]) {

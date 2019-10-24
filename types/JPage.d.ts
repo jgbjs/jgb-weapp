@@ -30,6 +30,21 @@ interface IPageOptions<
 ```
    */
   computed?: Accessors<Computed>;
+  /**
+   * 监听属性变化
+   * 使用方法与 Component[observers] 一样
+   * @example
+  ```js
+  {
+    watch: {
+      '[some.field.**'](field) {
+
+      }
+    }
+  }
+  ```
+   */
+  watch?: IAnyObject;
 }
 
 interface IPageInstanceExt {
@@ -55,6 +70,13 @@ interface IPageInstanceExt {
    * @param ctx ctx作用域默认是当前页面
    */
   $scrollIntoView(selector: string, ctx?: any): Promise<any>;
+  /**
+   * 监听属性变化 参考Component.observers
+   * @param observerKey 监听属性key
+   * @param callback 属性改变时回调
+   * @see https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/observer.html
+   */
+  $watch(observerKey: string, callback: IEventFunction): any;
   setData: ISetData;
 }
 

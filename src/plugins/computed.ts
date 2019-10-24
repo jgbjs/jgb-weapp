@@ -4,11 +4,9 @@ import { Compute } from '../compute';
 const computedPlugin: IPlugin = {
   install(res) {
     const { JPage, JComponent } = res;
-    // tslint:disable-next-line: only-arrow-functions
-    JPage.intercept(function(opts) {
+    JPage.intercept(opts => {
       const init = Compute(opts);
-      // tslint:disable-next-line: no-empty
-      const onLoad = opts.onLoad || (() => {});
+      const onLoad = opts.onLoad || noop;
       opts.onLoad = function(...args: any[]) {
         init(this);
         onLoad.apply(this, args);
@@ -16,11 +14,9 @@ const computedPlugin: IPlugin = {
       return opts;
     });
 
-    // tslint:disable-next-line: only-arrow-functions
-    JComponent.intercept(function(opts) {
+    JComponent.intercept(opts => {
       const init = Compute(opts);
-      // tslint:disable-next-line: no-empty
-      const created = opts.created || (() => {});
+      const created = opts.created || noop;
       opts.created = function(...args: any[]) {
         init(this);
         created.apply(this, args);
@@ -29,5 +25,8 @@ const computedPlugin: IPlugin = {
     });
   }
 };
+
+// tslint:disable-next-line: no-empty
+function noop() {}
 
 export default computedPlugin;
