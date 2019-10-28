@@ -70,7 +70,9 @@ JComponent.mixin({
     }
   },
   detached() {
-    this.$page[ALL_COMPONENTS].delete(this);
+    if(this.$page && this.$page[ALL_COMPONENTS]) {
+      this.$page[ALL_COMPONENTS].delete(this);
+    }
     this.$destory();
   }
 });
