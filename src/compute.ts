@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import { IEventFunction } from '../types/eventbus';
+import { canPropertyConfigurable } from './utils';
 import { CallNode, CallTree } from './utils/calltree';
 import { match } from './utils/match';
 
@@ -106,12 +107,14 @@ export function Compute(opts: any) {
       }
     });
 
-    Object.defineProperty(scope, 'setData', {
-      configurable: true,
-      get() {
-        return _setData;
-      }
-    });
+    if (canPropertyConfigurable(this, 'setData')) {
+      Object.defineProperty(scope, 'setData', {
+        configurable: true,
+        get() {
+          return _setData;
+        }
+      });
+    }
 
     // tslint:disable-next-line: no-shadowed-variable
     function _setData(data: any, callback: any) {

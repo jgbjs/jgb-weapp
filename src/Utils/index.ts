@@ -122,3 +122,14 @@ export function getCurrentPage() {
   const currentPage: any = pages.length > 0 ? pages[pages.length - 1] : null;
   return currentPage;
 }
+
+/**
+ * 判断属性是否可以重新定义
+ */
+export function canPropertyConfigurable(obj: any, key: string) {
+  const descriptor = Object.getOwnPropertyDescriptor(obj, key);
+  if (descriptor && descriptor.configurable) {
+    return true;
+  }
+  return false;
+}

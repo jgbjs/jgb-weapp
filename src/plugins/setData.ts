@@ -1,5 +1,6 @@
 import set from 'lodash/set';
 import { IPlugin } from '../../types/plugins';
+import { canPropertyConfigurable } from '../utils';
 import nextTick from '../utils/nextTick';
 
 /**
@@ -31,47 +32,51 @@ function setDataPerformance(this: any) {
   const setData = this.setData.bind(this);
   this[$MERGE_DATA] = [];
 
-  Object.defineProperty(this, 'setData', {
-    configurable: true,
-    get() {
-      return (data: any, cb: any) => {
-        this[$MERGE_DATA].push({ data, cb });
-        setDataOnPath(this.data, data);
-        nextTick(() => {
-          if (this[$MERGE_DATA].length === 0) {
-            return;
-          }
-          const copies = copyArrAndClean(this[$MERGE_DATA]);
-          const datas = [];
-          const cbs = [] as any[];
-          const len = copies.length;
-          for (let i = 0; i < len; i++) {
-            // tslint:disable-next-line: no-shadowed-variable
-            const { data, cb } = copies[i];
-            datas.push(data);
-            if (typeof cb === 'function') {
-              cbs.push(cb);
+  // 判断是否可以重新定义setData
+  // @ts-ignore
+  if (typeof my === 'undefined' && canPropertyConfigurable(this, 'setData')) {
+    Object.defineProperty(this, 'setData', {
+      configurable: true,
+      get() {
+        return (data: any, cb: any) => {
+          this[$MERGE_DATA].push({ data, cb });
+          setDataOnPath(this.data, data);
+          nextTick(() => {
+            if (this[$MERGE_DATA].length === 0) {
+              return;
             }
-          }
-
-          const d = Object.assign({}, ...datas);
-          setData(d, () => {
-            const callbacks = copyArrAndClean(cbs);
-            const l = callbacks.length;
-            let i = 0;
-            while (i < l) {
-              try {
-                callbacks[i]();
-              } catch (error) {
-                console.error(error);
+            const copies = copyArrAndClean(this[$MERGE_DATA]);
+            const datas = [];
+            const cbs = [] as any[];
+            const len = copies.length;
+            for (let i = 0; i < len; i++) {
+              // tslint:disable-next-line: no-shadowed-variable
+              const { data, cb } = copies[i];
+              datas.push(data);
+              if (typeof cb === 'function') {
+                cbs.push(cb);
               }
-              i++;
             }
+
+            const d = Object.assign({}, ...datas);
+            setData(d, () => {
+              const callbacks = copyArrAndClean(cbs);
+              const l = callbacks.length;
+              let i = 0;
+              while (i < l) {
+                try {
+                  callbacks[i]();
+                } catch (error) {
+                  console.error(error);
+                }
+                i++;
+              }
+            });
           });
-        });
-      };
-    }
-  });
+        };
+      }
+    });
+  }
 }
 
 function copyArrAndClean(arr: any[]) {
