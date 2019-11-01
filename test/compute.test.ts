@@ -1,3 +1,4 @@
+require('./polyfill/index');
 import { calcComputed, fnContainsComputeKey } from '../src/compute';
 import { CallNode, CallTree } from '../src/utils/calltree';
 

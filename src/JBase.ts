@@ -1,17 +1,16 @@
-import { IEventFunction } from '../types/eventbus';
+import { IEventBus, IEventFunction } from '../types/eventbus';
 import { bus } from './EventBus';
 import nextTick from './utils/nextTick';
 
 export const event = '$events$';
+export const evtBusCollection = '$evtBus$';
 export const setTimeoutCollection = '$setTimeout$';
 export const setIntervalCollection = '$setInterval$';
 
 export default class JBase {
   /* 当前绑定事件集合 */
-  private [event]: Array<{
-    evtName: string;
-    fn: IEventFunction;
-  }>;
+  private [event]: Array<number | number[]>;
+  private [evtBusCollection]: Array<[IEventBus, number | number[]]>;
 
   private [setTimeoutCollection]: Set<number>;
   private [setIntervalCollection]: Set<number>;
@@ -19,25 +18,20 @@ export default class JBase {
   constructor() {
     if (this) {
       this[event] = [];
+      this[evtBusCollection] = [];
       this[setTimeoutCollection] = new Set();
       this[setIntervalCollection] = new Set();
     }
   }
 
   $on(evtName: string, fn: IEventFunction) {
-    bus.on(evtName, fn);
-    this[event].push({
-      evtName,
-      fn
-    });
+    const ids = bus.on(evtName, fn);
+    this[event].push(ids);
   }
 
   $once(evtName: string, fn: IEventFunction) {
-    bus.once(evtName, fn);
-    this[event].push({
-      evtName,
-      fn
-    });
+    const ids = bus.once(evtName, fn);
+    this[event].push(ids);
   }
 
   $emit(evtName: string, ...data: any[]) {
@@ -64,14 +58,31 @@ export default class JBase {
     return id;
   }
 
+  /**
+   * 增加 eventBusId
+   */
+  $addBusId(ids: number | number[], busInstance?: IEventBus) {
+    if (busInstance) {
+      this[evtBusCollection].push([busInstance, ids]);
+      return;
+    }
+    this[event].push(ids);
+  }
+
   /* 清除所有当前绑定的事件 */
   $destory() {
     const events = this[event];
     // 下一帧执行, 避免事件被提前销毁
     nextTick(() => {
       while (events.length) {
-        const { evtName, fn } = events.pop();
-        bus.off(evtName, fn);
+        const ids = events.pop();
+        bus.off(ids);
+      }
+
+      const collects = this[evtBusCollection];
+      while (collects.length) {
+        const [instance, ids] = collects.pop();
+        instance.off(ids);
       }
     });
     this[event] = [];

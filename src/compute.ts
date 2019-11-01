@@ -107,7 +107,7 @@ export function Compute(opts: any) {
       }
     });
 
-    if (canPropertyConfigurable(this, 'setData')) {
+    if (canPropertyConfigurable(scope, 'setData')) {
       Object.defineProperty(scope, 'setData', {
         configurable: true,
         get() {

@@ -1,3 +1,4 @@
+require('./polyfill/index');
 import { callWatch } from '../src/compute';
 import { innerMatch, match } from '../src/utils/match';
 
