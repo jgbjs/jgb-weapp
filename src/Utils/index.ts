@@ -128,7 +128,7 @@ export function getCurrentPage() {
  */
 export function canPropertyConfigurable(obj: any, key: string) {
   const descriptor = Object.getOwnPropertyDescriptor(obj, key);
-  if (descriptor && descriptor.configurable) {
+  if (!descriptor || descriptor.configurable) {
     return true;
   }
   return false;
