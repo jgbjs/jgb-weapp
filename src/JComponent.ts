@@ -43,18 +43,19 @@ export default class JComponent extends JBase {
 
 function addComponentToPage(component: any) {
   // 仿支付宝，对组件提供当前页面实例
+  // 经过测试，在attached之后 getCurrentPage 返回的是当前页面
   if (!component.$page) {
     component.$page = getCurrentPage();
   }
   if(component.$page) {
-    component.$page[ALL_COMPONENTS] = component.$page[ALL_COMPONENTS] || new Set();
+    component.$page[ALL_COMPONENTS] = component.$page[ALL_COMPONENTS] || new WeakSet();
     component.$page[ALL_COMPONENTS].add(component);
   }  
 }
 
 JComponent.mixin({
   created() {
-    addComponentToPage(this);
+    // addComponentToPage(this);
   },
   attached() {
     addComponentToPage(this);

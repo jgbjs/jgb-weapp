@@ -83,7 +83,7 @@ JPage.mixin({
   [ADD_HIDE_HANDLER]: handlerFactory(HIDE_HANDLER),
   onLoad(options: any) {
     this.$options = options;
-    this[ALL_COMPONENTS] = this[ALL_COMPONENTS] || new Set();
+    this[ALL_COMPONENTS] = this[ALL_COMPONENTS] || new WeakSet();
     Object.defineProperty(this, '$appOptions', {
       get() {
         return getApp().$appOptions;
