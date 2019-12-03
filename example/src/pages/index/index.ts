@@ -1,4 +1,4 @@
-import { JPage} from 'jgb-weapp';
+import { JPage } from 'jgb-weapp';
 
 JPage({
   data: {
