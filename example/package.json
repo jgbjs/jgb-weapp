@@ -9,12 +9,12 @@
     "build": "jgb build"
   },
   "dependencies": {
-    "jgb-plugin-babel": "^1.5.2",
-    "jgb-plugin-css": "^1.5.2",
-    "jgb-plugin-json": "^1.5.2",
-    "jgb-plugin-less": "^1.5.2",
-    "jgb-plugin-typescript": "^1.5.2",
-    "jgb-preset-weapp": "^1.5.2",
+    "jgb-plugin-babel": "^1.8.4",
+    "jgb-plugin-css": "^1.8.4",
+    "jgb-plugin-json": "^1.8.4",
+    "jgb-plugin-less": "^1.8.4",
+    "jgb-plugin-typescript": "^1.8.4",
+    "jgb-preset-weapp": "^1.8.4",
     "lodash-es": "^4.17.14",
     "tslib": "^1.9.3"
   },

@@ -1,8 +1,8 @@
-import get from 'lodash/get';
-import { IEventFunction } from '../types/eventbus';
-import { canPropertyConfigurable } from './utils';
-import { CallNode, CallTree } from './utils/calltree';
-import { match } from './utils/match';
+import get from "lodash/get";
+import { IEventFunction } from "../types/eventbus";
+import { canPropertyConfigurable } from "./utils";
+import { CallNode, CallTree } from "./utils/calltree";
+import { match } from "./utils/match";
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 const cache = Symbol(`cache`);
@@ -32,22 +32,22 @@ export function Compute(opts: any) {
       const valueType = Object.prototype.toString.call(value);
       let oldObserver: any;
       if (
-        valueType === '[object Function]' ||
-        valueType === '[object Null]' ||
-        valueType === '[object Array]'
+        valueType === "[object Function]" ||
+        valueType === "[object Null]" ||
+        valueType === "[object Array]"
       ) {
         properties[key] = {
           type: value
         };
-      } else if (typeof value === 'object') {
-        if (hasOwnProperty.call(value, 'value')) {
+      } else if (typeof value === "object") {
+        if (hasOwnProperty.call(value, "value")) {
           // 处理值
           data[key] = value.value;
         }
 
         if (
-          hasOwnProperty.call(value, 'observer') &&
-          typeof value.observer === 'function'
+          hasOwnProperty.call(value, "observer") &&
+          typeof value.observer === "function"
         ) {
           oldObserver = value.observer;
         }
@@ -94,21 +94,21 @@ export function Compute(opts: any) {
   }
 
   // 计算 computed
-  calcComputed(opts, computed, computedKeys);
+  calcComputed(transformInitOpts(opts), computed, computedKeys);
 
   return function init(scope: any) {
     scope[cache] = {};
     scope[setData] = scope.setData;
     scope[doingSetData] = false;
     scope[doingSetProps] = false;
-    Object.defineProperty(scope, '$watch', {
+    Object.defineProperty(scope, "$watch", {
       get() {
         return addWatch;
       }
     });
 
-    if (canPropertyConfigurable(scope, 'setData')) {
-      Object.defineProperty(scope, 'setData', {
+    if (canPropertyConfigurable(scope, "setData")) {
+      Object.defineProperty(scope, "setData", {
         configurable: true,
         get() {
           return _setData;
@@ -132,7 +132,7 @@ export function Compute(opts: any) {
       for (let i = 0, len = dataKeys.length; i < len; i++) {
         const key = dataKeys[i];
 
-        if (typeof computed[key] !== 'undefined') {
+        if (typeof computed[key] !== "undefined") {
           delete data[key];
         }
         if (!this[doingSetProps] && propertyKeys.indexOf(key) >= 0) {
@@ -143,7 +143,7 @@ export function Compute(opts: any) {
       // 做 data 属性的 setData
       originalSetData.call(this, data, () => {
         callWatch(this, data, watch);
-        if (typeof callback === 'function') {
+        if (typeof callback === "function") {
           callback.call(this);
         }
       });
@@ -179,7 +179,7 @@ export function callWatch(scope: any, updateData: any = {}, watch: any = {}) {
 
   for (const watchkey of watchKeys) {
     // 可能有这种情况： number1, number2
-    const subkeys = watchkey.split(',').map(key => `${key}`.trim());
+    const subkeys = watchkey.split(",").map(key => `${key}`.trim());
     for (const updatekey of updateKeys) {
       // 一次 setData 最多触发每个监听器一次
       if (match(subkeys, updatekey)) {
@@ -187,8 +187,8 @@ export function callWatch(scope: any, updateData: any = {}, watch: any = {}) {
         fn.apply(
           scope,
           subkeys.map(key => {
-            const getPath = key.replace(/\.*\*{2}/, '');
-            if (getPath === '') {
+            const getPath = key.replace(/\.*\*{2}/, "");
+            if (getPath === "") {
               return scope.data;
             }
             return get(scope.data, getPath);
@@ -198,6 +198,26 @@ export function callWatch(scope: any, updateData: any = {}, watch: any = {}) {
       }
     }
   }
+}
+
+/**
+ * 转换初始化的 properties
+ */
+function transformInitOpts(opts: any) {
+  opts = Object.assign({}, opts);
+  const propertyKeys = Object.keys(opts.properties || {});
+  const data = opts.data || {};
+  const newProps = {} as any;
+
+  propertyKeys.forEach(key => {
+    const value = data[key];
+    // if(typeof value === 'undefined') {
+    // }
+    newProps[key] = value;
+  });
+
+  opts.properties = newProps;
+  return opts;
 }
 
 export function calcComputed(scope: any, computed: any, keys: any[]) {
@@ -216,7 +236,7 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
   const computedCache = scope[cache] || scope.data || {};
 
   const getAndSetCache = (key: string, getter: any) => {
-    if (typeof getter !== 'function') {
+    if (typeof getter !== "function") {
       return;
     }
     const value = getter.call(scope);
@@ -232,7 +252,7 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
   for (let i = 0, len = computedKeys.length; i < len; i++) {
     const key = computedKeys[i];
     const getter = computed[key];
-    if (typeof getter === 'function') {
+    if (typeof getter === "function") {
       const depkeys = fnContainsComputeKey(getter, computed);
       const callNode = new CallNode(key, [...depkeys]);
       callTree.addCallNode(callNode);
@@ -265,8 +285,8 @@ export function fnContainsComputeKey(fn: any, computed: any): Set<string> {
 
   const str: string = fn.toString();
   const keys = Object.keys(computed);
-  const reg1 = new RegExp(`data\\.(${keys.join('|')})`, 'g');
-  const reg2 = new RegExp(`data\\[('|")(${keys.join('|')})\\1\\]`, 'g');
+  const reg1 = new RegExp(`data\\.(${keys.join("|")})`, "g");
+  const reg2 = new RegExp(`data\\[('|")(${keys.join("|")})\\1\\]`, "g");
   const matchComputeKeys = new Set<string>();
   let matches;
   // tslint:disable-next-line: no-conditional-assignment
