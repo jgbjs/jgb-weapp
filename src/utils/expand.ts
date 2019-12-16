@@ -103,7 +103,7 @@ export default function expand(interceptEntry: string) {
     globalIntercepts.add(event);
   }
 
-  function interceptOptions(opts: any) {
+  function interceptOptions(this: any, opts: any) {
     const fns = [...globalIntercepts];
     if (fns.length === 0) {
       return opts;

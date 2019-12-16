@@ -31,9 +31,9 @@ export default class JComponent extends JBase {
         [HIDE_HANDLER]: hide
       });
     }
-    hook(opts, 'created', function() {
+    hook(opts, 'created', function(this: any) {
       JBase.call(this);
-    })
+    });
     opts.methods = Object.assign({}, opts.methods, JBase.prototype);
 
     const options = JComponent[INIT](opts);
@@ -47,10 +47,11 @@ function addComponentToPage(component: any) {
   if (!component.$page) {
     component.$page = getCurrentPage();
   }
-  if(component.$page) {
-    component.$page[ALL_COMPONENTS] = component.$page[ALL_COMPONENTS] || new WeakSet();
+  if (component.$page) {
+    component.$page[ALL_COMPONENTS] =
+      component.$page[ALL_COMPONENTS] || new WeakSet();
     component.$page[ALL_COMPONENTS].add(component);
-  }  
+  }
 }
 
 JComponent.mixin({
@@ -71,7 +72,7 @@ JComponent.mixin({
     }
   },
   detached() {
-    if(this.$page && this.$page[ALL_COMPONENTS]) {
+    if (this.$page && this.$page[ALL_COMPONENTS]) {
       this.$page[ALL_COMPONENTS].delete(this);
     }
     this.$destory();

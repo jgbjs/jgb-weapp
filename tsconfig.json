@@ -5,11 +5,18 @@
     "target": "es5",
     "experimentalDecorators": true,
     "importHelpers": true,
+    "noImplicitThis": true,
     "downlevelIteration": true,
     "moduleResolution": "node",
-    "lib": ["es7", "dom", "esnext"],
+    "lib": [
+      "es7",
+      "dom",
+      "esnext"
+    ],
     "paths": {
-      "tslib": ["node_modules/tslib/tslib.d.ts"]
+      "tslib": [
+        "node_modules/tslib/tslib.d.ts"
+      ]
     },
     "outDir": "./lib/",
     "baseUrl": "src",
@@ -19,7 +26,14 @@
     "declaration": false,
     "sourceMap": false,
     "inlineSourceMap": false,
-    "typeRoots": ["./node_modules/@types", "./node_modules/@tuhu", "./types"]
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@tuhu",
+      "./types"
+    ]
   },
-  "exclude": ["node_modules", "dist", "lib", "test", "example"]
+  "include": [
+    "./src",
+    "./tsd"
+  ]
 }

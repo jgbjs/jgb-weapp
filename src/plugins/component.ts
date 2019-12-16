@@ -43,10 +43,10 @@ const componentLazyLoadPlugin: IPlugin = {
           value: 0
         }
       },
-      created() {
+      created(this: any) {
         this[resolveTasks] = [];
       },
-      detached() {
+      detached(this: any) {
         if (this[observeSymbol]) {
           this[observeSymbol].disconnect();
         }
@@ -80,7 +80,7 @@ const componentLazyLoadPlugin: IPlugin = {
   }
 };
 
-async function lazyInitComponent(lifycycle: string) {
+async function lazyInitComponent(this: any, lifycycle: string) {
   const {
     jLoading: $loading,
     jSelector: $targetSelector,
@@ -124,4 +124,3 @@ async function lazyInitComponent(lifycycle: string) {
 }
 
 export { componentLazyLoadPlugin };
-

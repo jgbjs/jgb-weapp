@@ -5,7 +5,7 @@ import {
   ADD_SHOW_HANDLER,
   ALL_COMPONENTS,
   HIDE_HANDLER,
-  SHOW_HANDLER,
+  SHOW_HANDLER
 } from './utils/const';
 import expand, { INIT } from './utils/expand';
 
@@ -102,7 +102,7 @@ JPage.mixin({
 });
 
 function handlerFactory(eventName: string) {
-  return function(fn: AnyFunction) {
+  return function(this: any, fn: AnyFunction) {
     if (typeof fn !== 'function') {
       return;
     }

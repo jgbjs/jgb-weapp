@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "outDir": "./dist",
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
@@ -8,17 +9,27 @@
     "inlineSourceMap": false,
     "module": "es2015",
     "target": "es5",
-    "allowJs": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "downlevelIteration": true,
     "moduleResolution": "node",
-    "typeRoots": ["./node_modules/@types", "./node_modules/@tuhu"],
-    "declaration": true,
-    "lib": ["es2015", "es6", "es2017", "dom"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@tuhu"
+    ],
+    "lib": [
+      "es2015",
+      "es6",
+      "es2017",
+      "dom"
+    ],
     "paths": {
-      "tslib": ["node_modules/tslib/tslib.d.ts"],
-      "jgb-weapp": ["../types"]
+      "tslib": [
+        "node_modules/tslib/tslib.d.ts"
+      ],
+      "jgb-weapp": [
+        "../types"
+      ]
     }
   }
 }

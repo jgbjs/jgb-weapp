@@ -110,7 +110,7 @@ global.wx = {
   }
 };
 
-function ApplyFunctions(fns: Array<any>, args: any[] = []) {
+function ApplyFunctions(this: any, fns: any[], args: any[] = []) {
   for (const fn of fns) {
     fn.apply(this, args);
   }
