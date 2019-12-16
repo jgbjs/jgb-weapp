@@ -1,3 +1,4 @@
+/// <reference types="@tuhu/miniprogram-api-typings" />
 import { Accessors, DefaultData } from './common';
 import { IEventFunction, INewEventBus } from './eventbus';
 import { Router } from './router';

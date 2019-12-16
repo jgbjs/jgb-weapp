@@ -6,8 +6,9 @@
   },
   "main": "lib/index.js",
   "license": "MIT",
-  "typings": "types/index.d.ts",
+  "types": "./types/index.d.ts",
   "files": [
+    "types/index.d.ts",
     "types",
     "lib"
   ],
@@ -17,10 +18,11 @@
   },
   "homepage": "https://github.com/jgbjs/jgb-weapp",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
     "clean": "rimraf ./lib",
     "watch": "yarn run build --watch",
-    "prepublishOnly": "yarn run clean && yarn run build && yarn run test",
+    "prepublishOnly": "yarn run clean && yarn run build && yarn run test && yarn run tsd",
+    "tsd": "tsd",
     "test": "jest --env=node --colors --coverage test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
@@ -33,6 +35,7 @@
     "jest": "^23.6.0",
     "rimraf": "^2.6.2",
     "ts-jest": "^23.10.5",
+    "tsd": "^0.11.0",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.14.0",
     "typescript": "3.0.1",
@@ -42,6 +45,9 @@
     "@tuhu/miniprogram-api-typings": "^2.8.3-2",
     "lodash": "^4.17.13",
     "tslib": "^1.10.0"
+  },
+  "tsd": {
+    "directory": "tsd"
   },
   "gitHead": "49688f4591472560ab783b4fa535026dd3b62eef"
 }

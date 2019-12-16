@@ -238,7 +238,7 @@ export function CreateRequestWithLazyLoadRequestTask(rq = requestQueue) {
 
 export const request = CreateRequestWithLazyLoadRequestTask();
 
-function ApplyFunctions(fns: any[], args: any[] = []) {
+function ApplyFunctions(this: any, fns: any[], args: any[] = []) {
   for (const fn of fns) {
     fn.apply(this, args);
   }

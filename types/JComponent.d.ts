@@ -46,6 +46,13 @@ type PageInstance = Required<
 interface IComponentInstanceExt<Data, Props, Computed> {
   /** 组件所属页面实例  */
   $page: PageInstance;
+  /**
+   * 监听属性变化 参考Component.observers
+   * @param observerKey 监听属性key
+   * @param callback 属性改变时回调
+   * @see https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/observer.html
+   */
+  $watch(observerKey: string, callback: IEventFunction): any;
 }
 
 type CombinedJComponentInstance<
