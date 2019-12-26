@@ -48,6 +48,16 @@ export const noop = () => {};
 
 export const systemInfo = wx.getSystemInfoSync() as any;
 
+function indexOrEnd(str: string, q: string) {
+  return str.indexOf(q) === -1 ? str.length : str.indexOf(q);
+}
+function split(v: string) {
+  const c = v.replace(/^v/, '').replace(/\+.*$/, '');
+  const patchIndex = indexOrEnd(c, '-');
+  const arr = c.substring(0, patchIndex).split('.');
+  arr.push(c.substring(patchIndex + 1));
+  return arr;
+}
 /**
  * 比较版本
  * v1 === v2 return 0
@@ -56,28 +66,20 @@ export const systemInfo = wx.getSystemInfoSync() as any;
  * @returns
  */
 export function compareVersion(v1: string, v2: string) {
-  const v1Arr = v1.split('.');
-  const v2Arr = v2.split('.');
-  const len = Math.max(v1.length, v2.length);
+  const s1 = split(v1);
+  const s2 = split(v2);
 
-  while (v1.length < len) {
-    v1Arr.push('0');
-  }
-  while (v2.length < len) {
-    v2Arr.push('0');
-  }
+  for (let i = 0; i < Math.max(s1.length - 1, s2.length - 1); i++) {
+    const n1 = parseInt(s1[i] || '0', 10);
+    const n2 = parseInt(s2[i] || '0', 10);
 
-  for (let i = 0; i < len; i++) {
-    const num1 = parseInt(v1Arr[i], 10);
-    const num2 = parseInt(v2Arr[i], 10);
-
-    if (num1 > num2) {
+    if (n1 > n2) {
       return 1;
-    } else if (num1 < num2) {
+    }
+    if (n2 > n1) {
       return -1;
     }
   }
-
   return 0;
 }
 
