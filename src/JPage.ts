@@ -86,7 +86,9 @@ JPage.mixin({
     this[ALL_COMPONENTS] = this[ALL_COMPONENTS] || new WeakSet();
     Object.defineProperty(this, '$appOptions', {
       get() {
-        return getApp().$appOptions;
+        return getApp({
+          allowDefault: true
+        })?.$appOptions;
       }
     });
   },
