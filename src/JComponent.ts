@@ -11,6 +11,8 @@ import {
 import expand, { INIT } from './utils/expand';
 import { hook } from './utils/hook';
 
+const lifetimesKey = ['created', 'attached', 'ready', 'moved', 'detached']
+
 // @ts-ignore
 @expand('created')
 export default class JComponent extends JBase {
@@ -23,6 +25,11 @@ export default class JComponent extends JBase {
       return new JComponent(opts);
     }
 
+    // created call JBase
+    hook(opts, 'created', function (this: any) {
+      JBase.call(this);
+    });
+
     // 判断是否支持pageLifetimes
     if (opts.pageLifetimes && !isSupportVersion('2.2.3')) {
       const { show = noop, hide = noop, resize = noop } = opts.pageLifetimes;
@@ -31,9 +38,33 @@ export default class JComponent extends JBase {
         [HIDE_HANDLER]: hide
       });
     }
-    hook(opts, 'created', function(this: any) {
-      JBase.call(this);
-    });
+
+
+    if (opts.lifetimes) {
+      const lifetimes = opts.lifetimes;
+      // 对低版本做兼容
+      if (!isSupportVersion('2.2.3')) {
+        lifetimesKey.forEach(key => {
+          if (lifetimes[key]) {
+            hook(opts, key, lifetimes[key]);
+          }
+        })
+      }
+      else {
+        // 兼容老版本生命周期
+        lifetimesKey.forEach(key => {
+          if (lifetimes[key]) {
+            hook(lifetimes, key, function (this: JComponent, ...args: any[]) {
+              const fn = opts[key];
+              if (typeof fn === 'function') {
+                fn.apply(this, args);
+              }
+            }, false);
+          }
+        })
+      }
+    }
+
     opts.methods = Object.assign({}, opts.methods, JBase.prototype);
 
     const options = JComponent[INIT](opts);

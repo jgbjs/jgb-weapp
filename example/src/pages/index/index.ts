@@ -2,7 +2,8 @@ import { JPage } from 'jgb-weapp';
 
 JPage({
   data: {
-    index: 0
+    index: 0,
+    isShowLifeTimeComponent: false
   },
   computed: {
     add(): number {
@@ -31,5 +32,10 @@ JPage({
         index: idx + i
       });
     }
-  }
+  },
+  showLifeTimeComponent() {
+    this.setData({
+      isShowLifeTimeComponent: !this.data.isShowLifeTimeComponent
+    })
+  },
 });
