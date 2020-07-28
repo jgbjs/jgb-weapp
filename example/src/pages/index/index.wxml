@@ -1,3 +1,5 @@
 <navigator url="/pages/test-lazy-load/index">测试延迟加载组件</navigator>
 <view>{{index}}</view>
 <button bindtap="testBatchSetData">testBatchSetData</button>
+<button bindtap="showLifeTimeComponent">测试组件lifetime</button>
+<comp wx:if="{{isShowLifeTimeComponent}}"></comp>
