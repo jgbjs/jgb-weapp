@@ -1,8 +1,8 @@
-import get from "lodash/get";
-import { IEventFunction } from "../types/eventbus";
-import { canPropertyConfigurable } from "./utils";
-import { CallNode, CallTree } from "./utils/calltree";
-import { match } from "./utils/match";
+import get from 'lodash/get';
+import { IEventFunction } from '../types/eventbus';
+import { canPropertyConfigurable } from './utils';
+import { CallNode, CallTree } from './utils/calltree';
+import { match } from './utils/match';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 const cache = Symbol(`cache`);
@@ -32,22 +32,22 @@ export function Compute(opts: any) {
       const valueType = Object.prototype.toString.call(value);
       let oldObserver: any;
       if (
-        valueType === "[object Function]" ||
-        valueType === "[object Null]" ||
-        valueType === "[object Array]"
+        valueType === '[object Function]' ||
+        valueType === '[object Null]' ||
+        valueType === '[object Array]'
       ) {
         properties[key] = {
           type: value,
         };
-      } else if (typeof value === "object") {
-        if (hasOwnProperty.call(value, "value")) {
+      } else if (typeof value === 'object') {
+        if (hasOwnProperty.call(value, 'value')) {
           // 处理值
           data[key] = value.value;
         }
 
         if (
-          hasOwnProperty.call(value, "observer") &&
-          typeof value.observer === "function"
+          hasOwnProperty.call(value, 'observer') &&
+          typeof value.observer === 'function'
         ) {
           oldObserver = value.observer;
         }
@@ -102,15 +102,15 @@ export function Compute(opts: any) {
     scope[doingSetData] = false;
     scope[doingSetProps] = false;
 
-    Object.defineProperty(scope, "$watch", {
+    Object.defineProperty(scope, '$watch', {
       configurable: true,
       get() {
         return addWatch;
       },
     });
 
-    if (canPropertyConfigurable(scope, "setData")) {
-      Object.defineProperty(scope, "setData", {
+    if (canPropertyConfigurable(scope, 'setData')) {
+      Object.defineProperty(scope, 'setData', {
         configurable: true,
         get() {
           return _setData;
@@ -134,7 +134,7 @@ export function Compute(opts: any) {
       for (let i = 0, len = dataKeys.length; i < len; i++) {
         const key = dataKeys[i];
 
-        if (typeof computed[key] !== "undefined") {
+        if (typeof computed[key] !== 'undefined') {
           delete data[key];
         }
         if (!this[doingSetProps] && propertyKeys.indexOf(key) >= 0) {
@@ -145,13 +145,17 @@ export function Compute(opts: any) {
       // 做 data 属性的 setData
       originalSetData.call(this, data, () => {
         callWatch(this, data, watch);
-        if (typeof callback === "function") {
+        if (typeof callback === 'function') {
           callback.call(this);
         }
       });
 
+      const computeStart = Date.now();
       // 计算 computed
       const needUpdate = calcComputed(this, computed, computedKeys);
+      const computeCostTime = Date.now() - computeStart;
+      if (computeCostTime > 20)
+        console.warn('jgb计算属性耗时过高,检测是否有耗时计算，建议优化。', computeCostTime);
 
       if (Object.keys(needUpdate).length > 0) {
         // 做 computed 属性的 setData
@@ -181,7 +185,7 @@ export function callWatch(scope: any, updateData: any = {}, watch: any = {}) {
 
   for (const watchkey of watchKeys) {
     // 可能有这种情况： number1, number2
-    const subkeys = watchkey.split(",").map((key) => `${key}`.trim());
+    const subkeys = watchkey.split(',').map((key) => `${key}`.trim());
     for (const updatekey of updateKeys) {
       // 一次 setData 最多触发每个监听器一次
       if (match(subkeys, updatekey)) {
@@ -189,8 +193,8 @@ export function callWatch(scope: any, updateData: any = {}, watch: any = {}) {
         fn.apply(
           scope,
           subkeys.map((key) => {
-            const getPath = key.replace(/\.*\*{2}/, "");
-            if (getPath === "") {
+            const getPath = key.replace(/\.*\*{2}/, '');
+            if (getPath === '') {
               return scope.data;
             }
             return get(scope.data, getPath);
@@ -238,7 +242,7 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
   const computedCache = scope[cache] || scope.data || {};
 
   const getAndSetCache = (key: string, getter: any) => {
-    if (typeof getter !== "function") {
+    if (typeof getter !== 'function') {
       return;
     }
     const value = getter.call(scope);
@@ -254,8 +258,8 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
   for (let i = 0, len = computedKeys.length; i < len; i++) {
     const key = computedKeys[i];
     const getter = computed[key];
-    if (typeof getter === "function") {
-      const depkeys = fnContainsComputeKey(getter, computed);
+    if (typeof getter === 'function') {
+      const depkeys = getDepKeys(getter, computed, scope);
       const callNode = new CallNode(key, [...depkeys]);
       callTree.addCallNode(callNode);
     }
@@ -273,34 +277,77 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
 const cacheContainsComputekey = new WeakMap();
 
 /**
- * 获取computed中包含的其他computed的key
+ * 获取computed中依赖的data中key
  * e.g.
  *  this.data.key
  *  this.data['key'] this.data["key"]
  * @param fn
  * @param computed
  */
-export function fnContainsComputeKey(fn: any, computed: any): Set<string> {
+export function getDepKeys(
+  fn: Function,
+  computed: any,
+  scope?: any
+): Set<string> {
   if (cacheContainsComputekey.has(fn)) {
     return cacheContainsComputekey.get(fn);
   }
-
-  const str: string = fn.toString();
-  const keys = Object.keys(computed);
-  const reg1 = new RegExp(`data\\.(${keys.join("|")})`, "g");
-  const reg2 = new RegExp(`data\\[('|")(${keys.join("|")})\\1\\]`, "g");
   const matchComputeKeys = new Set<string>();
-  let matches;
-  // tslint:disable-next-line: no-conditional-assignment
-  while ((matches = reg1.exec(str)) !== null) {
-    matchComputeKeys.add(matches[1]);
+  const keys = Object.keys(computed);
+  const [isSuccess, depKeys] = tryUseProxyCollectDepKeys(scope, fn);
+  if (isSuccess) {
+    for (const key of depKeys.values()) {
+      if (keys.includes(key)) {
+        matchComputeKeys.add(key);
+      }
+    }
+  } else {
+    const str: string = fn.toString();
+
+    const reg1 = new RegExp(`data\\.(${keys.join('|')})`, 'g');
+    const reg2 = new RegExp(`data\\[('|")(${keys.join('|')})\\1\\]`, 'g');
+
+    let matches;
+    // tslint:disable-next-line: no-conditional-assignment
+    while ((matches = reg1.exec(str)) !== null) {
+      matchComputeKeys.add(matches[1]);
+    }
+
+    // tslint:disable-next-line: no-conditional-assignment
+    while ((matches = reg2.exec(str)) !== null) {
+      matchComputeKeys.add(matches[2]);
+    }
+
+    cacheContainsComputekey.set(fn, matchComputeKeys);
   }
 
-  // tslint:disable-next-line: no-conditional-assignment
-  while ((matches = reg2.exec(str)) !== null) {
-    matchComputeKeys.add(matches[2]);
-  }
-
-  cacheContainsComputekey.set(fn, matchComputeKeys);
   return matchComputeKeys;
+}
+
+/**
+ * 使用Proxy收集依赖
+ */
+function tryUseProxyCollectDepKeys(
+  scope: any,
+  fn: Function
+): [boolean, Set<string>] {
+  const matchedKeys: Set<string> = new Set();
+  if (!scope) return [false, matchedKeys];
+  const originData = scope.data || {};
+  let isSuccess = true;
+  try {
+    const proxyData = new Proxy(originData, {
+      get(target, prop) {
+        if (typeof prop === 'string') matchedKeys.add(prop);
+        return target[prop];
+      },
+    });
+    scope.data = proxyData;
+    fn.call(scope);
+  } catch (e) {
+    isSuccess = false;
+  } finally {
+    scope.data = originData;
+    return [isSuccess, matchedKeys];
+  }
 }

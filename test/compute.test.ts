@@ -1,8 +1,8 @@
 require('./polyfill/index');
-import { calcComputed, fnContainsComputeKey } from '../src/compute';
+import { calcComputed, getDepKeys } from '../src/compute';
 import { CallNode, CallTree } from '../src/utils/calltree';
 
-describe('fnContainsComputeKey', () => {
+describe('getDepKeys', () => {
   test('container this.data.key', () => {
     const computed = {
       data: {
@@ -17,7 +17,7 @@ describe('fnContainsComputeKey', () => {
         return data + key1;
       }
     };
-    const result = fnContainsComputeKey(computed.fn, computed);
+    const result = getDepKeys(computed.fn, computed);
     expect(result.size).toBe(1);
   });
   test(`container this.data['key']`, () => {
@@ -29,7 +29,7 @@ describe('fnContainsComputeKey', () => {
         return data;
       }
     };
-    const result = fnContainsComputeKey(computed.fn, computed);
+    const result = getDepKeys(computed.fn, computed);
     expect(result.size).toBe(1);
   });
   test(`container this.data["key"]`, () => {
@@ -41,7 +41,7 @@ describe('fnContainsComputeKey', () => {
         return data;
       }
     };
-    const result = fnContainsComputeKey(computed.fn, computed);
+    const result = getDepKeys(computed.fn, computed);
     expect(result.size).toBe(1);
   });
 });

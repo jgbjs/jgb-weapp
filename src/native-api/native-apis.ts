@@ -1,8 +1,10 @@
+// @ts-nocheck
+
 import {
   INoPromiseApis,
   IOnAndSyncApis,
-  IOtherApis
-} from "../../types/native-apis";
+  IOtherApis,
+} from '../../types/native-apis';
 
 export const onAndSyncApis: IOnAndSyncApis = {
   onSocketOpen: true,
@@ -25,6 +27,7 @@ export const onAndSyncApis: IOnAndSyncApis = {
   onHCEMessage: true,
   onGetWifiList: true,
   onWifiConnected: true,
+  onDeviceMotionChange: true,
   setStorageSync: true,
   getStorageSync: true,
   getStorageInfoSync: true,
@@ -32,7 +35,37 @@ export const onAndSyncApis: IOnAndSyncApis = {
   clearStorageSync: true,
   getSystemInfoSync: true,
   getExtConfigSync: true,
-  getLogManager: true
+  getLogManager: true,
+  onMemoryWarning: true,
+  reportMonitor: true,
+  reportAnalytics: true,
+  navigateToSmartGameProgram: true,
+  // 文件
+  getFileSystemManager: true,
+
+  getLaunchOptionsSync: true,
+  onPageNotFound: true,
+  onError: true,
+  onAppShow: true,
+  onAppHide: true,
+  offPageNotFound: true,
+  offError: true,
+  offAppShow: true,
+  offAppHide: true,
+  onAudioInterruptionEnd: true,
+  onAudioInterruptionBegin: true,
+  onLocationChange: true,
+  offLocationChange: true,
+
+  // 基础
+  onUnhandledRejection: true,
+  offUnhandledRejection: true,
+  onThemeChange: true,
+  offThemeChange: true,
+
+  // 界面
+  onKeyboardHeightChange: true,
+  offKeyboardHeightChange: true,
 };
 
 export const noPromiseApis: INoPromiseApis = {
@@ -48,6 +81,8 @@ export const noPromiseApis: INoPromiseApis = {
   createInnerAudioContext: true,
   createVideoContext: true,
   createCameraContext: true,
+  createLivePlayerContext: true,
+  createLivePusherContext: true,
 
   // 位置
   createMapContext: true,
@@ -65,26 +100,36 @@ export const noPromiseApis: INoPromiseApis = {
   showNavigationBarLoading: true,
   hideNavigationBarLoading: true,
   createAnimation: true,
-  pageScrollTo: true,
   createSelectorQuery: true,
+  createOffscreenCanvas: true,
   createCanvasContext: true,
   // createContext: true,
-  // drawCanvas: true,
-  // hideKeyboard: true,
+  drawCanvas: true,
+  hideKeyboard: true,
   stopPullDownRefresh: true,
   createIntersectionObserver: true,
 
-  // 拓展接口
-  // arrayBufferToBase64: true,
-  // base64ToArrayBuffer: true,
+  // 菜单
+  getMenuButtonBoundingClientRect: true,
 
+  onWindowResize: true,
+  offWindowResize: true,
+
+  // 拓展接口
+  arrayBufferToBase64: true,
+  base64ToArrayBuffer: true,
+
+  getAccountInfoSync: true,
   getUpdateManager: true,
-  createWorker: true
+  createWorker: true,
+
+  // 广告
+  createRewardedVideoAd: true,
+  createInterstitialAd: true
 };
 
 export const otherApis: IOtherApis = {
   // 网络
-  request: true,
   uploadFile: true,
   downloadFile: true,
   connectSocket: true,
@@ -93,11 +138,15 @@ export const otherApis: IOtherApis = {
 
   // 媒体
   chooseImage: true,
+  chooseMessageFile: true,
   previewImage: true,
   getImageInfo: true,
+  compressImage: true,
   saveImageToPhotosAlbum: true,
   startRecord: true,
   playVoice: true,
+  setInnerAudioOption: true,
+  getAvailableAudioSources: true,
   getBackgroundAudioPlayerState: true,
   playBackgroundAudio: true,
   seekBackgroundAudio: true,
@@ -128,6 +177,9 @@ export const otherApis: IOtherApis = {
   reLaunch: true,
 
   // 位置
+  startLocationUpdate: true,
+  startLocationUpdateBackground: true,
+  stopLocationUpdate: true,
   getLocation: true,
   chooseLocation: true,
   openLocation: true,
@@ -172,8 +224,11 @@ export const otherApis: IOtherApis = {
   getWifiList: true,
   setWifiList: true,
   getConnectedWifi: true,
+  startDeviceMotionListening: true,
+  stopDeviceMotionListening: true,
 
   // 界面
+  pageScrollTo: true,
   showToast: true,
   showLoading: true,
   showModal: true,
@@ -194,6 +249,11 @@ export const otherApis: IOtherApis = {
   canvasGetImageData: true,
   canvasPutImageData: true,
 
+  setBackgroundColor: true,
+  setBackgroundTextStyle: true,
+  getSelectedTextRange: true,
+  hideHomeButton: true,
+
   // 第三方平台
   getExtConfig: true,
 
@@ -202,9 +262,10 @@ export const otherApis: IOtherApis = {
   checkSession: true,
   authorize: true,
   getUserInfo: true,
-  // checkIsSupportFacialRecognition: true,
-  // startFacialRecognitionVerify: true,
-  // startFacialRecognitionVerifyAndUploadVideo: true,
+  checkIsSupportFacialRecognition: true,
+  startFacialRecognitionVerify: true,
+  startFacialRecognitionVerifyAndUploadVideo: true,
+  faceVerifyForPay: true,
   requestPayment: true,
   showShareMenu: true,
   hideShareMenu: true,
@@ -218,9 +279,16 @@ export const otherApis: IOtherApis = {
   getWeRunData: true,
   navigateToMiniProgram: true,
   navigateBackMiniProgram: true,
+  chooseInvoice: true,
   chooseInvoiceTitle: true,
   checkIsSupportSoterAuthentication: true,
   startSoterAuthentication: true,
-  checkIsSoterEnrolledInDevice: true
-  //
+  checkIsSoterEnrolledInDevice: true,
+
+  // 订阅消息
+  requestSubscribeMessage: true,
+
+  setEnableDebug: true,
+  // 支付宝小程序API
+  getOpenUserInfo: true,
 };

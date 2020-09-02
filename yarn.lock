@@ -845,10 +845,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tuhu/miniprogram-api-typings@^2.8.3-2":
-  version "2.8.3-2"
-  resolved "https://registry.npm.taobao.org/@tuhu/miniprogram-api-typings/download/@tuhu/miniprogram-api-typings-2.8.3-2.tgz#a3b905508f4d801c91e5ad4b208a286dc2ecf317"
-  integrity sha1-o7kFUI9NgByR5a1LIIoobcLs8xc=
+"@tuhu/miniprogram-api-typings@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/@tuhu/miniprogram-api-typings/download/@tuhu/miniprogram-api-typings-3.0.2.tgz#91be47db35333713e52c55b7e44939630fa02d86"
+  integrity sha1-kb5H2zUzNxPlLFW35Ek5Yw+gLYY=
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
