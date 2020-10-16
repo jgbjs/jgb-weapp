@@ -38,6 +38,7 @@ export default function expand(interceptEntry: string) {
 
   function init(opts: any, ctx: any = {}) {
     const entryIntercepts = intercepts.get(interceptEntry) || [];
+    opts = flattenObject(opts);
     opts = Mixin(
       opts,
       mergeMixins([
@@ -48,8 +49,8 @@ export default function expand(interceptEntry: string) {
             // so Intercept invoke must be init after first lifycycle
             // but will miss interceptEntry functions
             Intercept(this, intercepts);
-          }
-        }
+          },
+        },
       ])
     );
     const interceptEntryFn = opts[interceptEntry];
@@ -90,6 +91,19 @@ export default function expand(interceptEntry: string) {
     }
 
     mixins.push(obj);
+  }
+
+  /**
+   * 扁平Object
+   * @example class => flatten object
+   */
+  function flattenObject(opts: Record<string, any>) {
+    let proto = Object.getPrototypeOf(opts);
+    while (proto) {
+      opts = { ...proto, ...opts };
+      proto = Object.getPrototypeOf(proto);
+    }
+    return opts;
   }
 
   function intercept(event: string | IEventFunction, ifn: IEventFunction) {
