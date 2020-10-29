@@ -22,7 +22,6 @@ export function Compute(opts: any) {
   const computedKeys = Object.keys(computed);
   const propertyKeys = Object.keys(properties);
 
-  // 先将 properties 里的字段写入到 data 中
   if (propertyKeys.length) {
     propertyKeys.forEach((key) => {
       if (hasOwnProperty.call(propertyKeys, key)) {
@@ -41,8 +40,12 @@ export function Compute(opts: any) {
         };
       } else if (typeof value === 'object') {
         if (hasOwnProperty.call(value, 'value')) {
-          // 处理值
-          data[key] = value.value;
+          // // 先将 properties 里的字段写入到 data 中
+          // Object.defineProperty(data, key, {
+          //   get() {
+          //     return value.value;
+          //   },
+          // });
         }
 
         if (
@@ -155,7 +158,10 @@ export function Compute(opts: any) {
       const needUpdate = calcComputed(this, computed, computedKeys);
       const computeCostTime = Date.now() - computeStart;
       if (computeCostTime > 20)
-        console.warn('jgb计算属性耗时过高,检测是否有耗时计算，建议优化。', computeCostTime);
+        console.warn(
+          'jgb计算属性耗时过高,检测是否有耗时计算，建议优化。',
+          computeCostTime
+        );
 
       if (Object.keys(needUpdate).length > 0) {
         // 做 computed 属性的 setData
@@ -226,6 +232,18 @@ function transformInitOpts(opts: any) {
   return opts;
 }
 
+function setPropertyValue(obj: any, key: string, value: any) {
+  Object.defineProperty(obj, key, {
+    configurable: true,
+    get() {
+      return value;
+    },
+    set(val) {
+      value = val;
+    },
+  });
+}
+
 export function calcComputed(scope: any, computed: any, keys: any[]) {
   const computedKeys = [].concat(keys);
   if (computedKeys.length === 0) {
@@ -251,7 +269,7 @@ export function calcComputed(scope: any, computed: any, keys: any[]) {
       computedCache[key] = value;
 
       // 修复computed的属性引用computed的属性 计算值时获取不到实时数据
-      scope.data[key] = value;
+      setPropertyValue(scope.data, key, value);
     }
   };
 
@@ -339,11 +357,12 @@ function tryUseProxyCollectDepKeys(
     const proxyData = new Proxy(originData, {
       get(target, prop) {
         if (typeof prop === 'string') matchedKeys.add(prop);
-        return target[prop];
+        return target[prop] || scope.properties?.[prop];
       },
     });
     scope.data = proxyData;
     fn.call(scope);
+    scope.data = originData;
   } catch (e) {
     isSuccess = false;
   } finally {
