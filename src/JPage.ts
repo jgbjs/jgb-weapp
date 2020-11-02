@@ -5,7 +5,7 @@ import {
   ADD_SHOW_HANDLER,
   ALL_COMPONENTS,
   HIDE_HANDLER,
-  SHOW_HANDLER
+  SHOW_HANDLER,
 } from './utils/const';
 import expand, { INIT } from './utils/expand';
 
@@ -19,14 +19,15 @@ export default class JPage extends JBase {
    * 滚动到指定元素
    * @param selector 选择器
    * @param ctx ctx作用域默认是当前页面
+   * @param fixHeight scrollview可能在顶上有元素覆盖，需要修正滚动高度
    */
-  async $scrollIntoView(selector: string, ctx?: any) {
+  async $scrollIntoView(selector: string, ctx?: any, fixHeight = 0) {
     let query = wx.createSelectorQuery();
-    const getScrollTopPromise = new Promise<number>(resolve =>
+    const getScrollTopPromise = new Promise<number>((resolve) =>
       wx
         .createSelectorQuery()
         .selectViewport()
-        .scrollOffset(res => {
+        .scrollOffset((res) => {
           resolve(res.scrollTop);
         })
         .exec()
@@ -36,10 +37,10 @@ export default class JPage extends JBase {
       query = query.in(ctx);
     }
 
-    const getRectTopPromise = new Promise<number>(resolve => {
+    const getRectTopPromise = new Promise<number>((resolve) => {
       query
         .select(selector)
-        .boundingClientRect(rect => {
+        .boundingClientRect((rect) => {
           if (!rect) {
             return resolve(0);
           }
@@ -48,10 +49,11 @@ export default class JPage extends JBase {
         .exec();
     });
 
-    const realTop = (await getScrollTopPromise) + (await getRectTopPromise);
+    const realTop =
+      (await getScrollTopPromise) + (await getRectTopPromise) + fixHeight;
 
     wx.pageScrollTo({
-      scrollTop: realTop
+      scrollTop: realTop,
     });
   }
 
@@ -87,9 +89,9 @@ JPage.mixin({
     Object.defineProperty(this, '$appOptions', {
       get() {
         return getApp({
-          allowDefault: true
+          allowDefault: true,
         })?.$appOptions;
-      }
+      },
     });
   },
   onShow() {
@@ -100,7 +102,7 @@ JPage.mixin({
   },
   onUnload(this: JPage) {
     this.$destory();
-  }
+  },
 });
 
 function handlerFactory(eventName: string) {
