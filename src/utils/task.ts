@@ -7,6 +7,7 @@ export default class PromiseTask<T> {
   offHeadersReceived: (cb: any) => this;
   onHeadersReceived: (cb: any) => this;
   onProgressUpdate: (cb: any) => this;
+  offProgressUpdate: (cb: any) => this;
   abort: (cb: any) => this;
 
   constructor(executor: IExecutor) {

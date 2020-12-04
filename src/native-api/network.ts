@@ -145,7 +145,7 @@ export function CreateRequestWithLazyLoadRequestTask(rq = requestQueue) {
       abort: {
         get() {
           if (requestTask && requestTask.abort) {
-            return requestTask.abort;
+            return requestTask.abort.bind(requestTask);
           } else {
             return (...args: any[]) => {
               bus.emit(`abort:${requestId}`, args);
@@ -156,7 +156,7 @@ export function CreateRequestWithLazyLoadRequestTask(rq = requestQueue) {
       offHeadersReceived: {
         get() {
           if (requestTask && requestTask.offHeadersReceived) {
-            return requestTask.offHeadersReceived;
+            return requestTask.offHeadersReceived.bind(requestTask);
           } else {
             return (cb: any) => {
               bus.emit(`offHeadersReceived:${requestId}`, cb);
@@ -167,7 +167,7 @@ export function CreateRequestWithLazyLoadRequestTask(rq = requestQueue) {
       onHeadersReceived: {
         get() {
           if (requestTask && requestTask.onHeadersReceived) {
-            return requestTask.onHeadersReceived;
+            return requestTask.onHeadersReceived.bind(requestTask);
           } else {
             return (cb: any) => {
               bus.emit(`onHeadersReceived:${requestId}`, cb);
