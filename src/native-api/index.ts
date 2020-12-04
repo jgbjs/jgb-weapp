@@ -59,20 +59,16 @@ export default function initNativeApi(jgb: any = {}) {
         });
 
         if (['uploadFile', 'downloadFile', 'request'].includes(key)) {
-          p.onProgressUpdate = cb => {
-            if (typeof task.onProgressUpdate === 'function') {
-              task.onProgressUpdate(cb);
+          const nativeTaskMethods: ['abort', 'onProgressUpdate', 'offProgressUpdate', 'onHeadersReceived', 'offHeadersReceived'] = ['abort', 'onProgressUpdate', 'offProgressUpdate', 'onHeadersReceived', 'offHeadersReceived'];
+
+          nativeTaskMethods.forEach((method) => {
+            p[method] = (cb) => {
+              if (typeof task[method] === 'function') {
+                task[method](cb);
+              }
+              return p;
             }
-            return p;
-          };
-          p.abort = cb => {
-            // tslint:disable-next-line:no-unused-expression
-            cb && cb();
-            if (typeof task.abort === 'function') {
-              task.abort(cb);
-            }
-            return p;
-          };
+          });
         }
 
         return p;
