@@ -1,6 +1,6 @@
 {
   "name": "jgb-weapp",
-  "version": "1.6.11",
+  "version": "1.6.12",
   "publishConfig": {
     "access": "public"
   },
@@ -42,7 +42,7 @@
     "vuepress": "^1.0.3"
   },
   "dependencies": {
-    "@tuhu/miniprogram-api-typings": "^3.0.2",
+    "@tuhu/miniprogram-api-typings": "^3.2.0",
     "lodash": "^4.17.13",
     "tslib": "^1.10.0"
   },

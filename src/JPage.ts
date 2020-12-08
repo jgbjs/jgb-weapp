@@ -1,5 +1,4 @@
-import { IEventFunction } from '../types/eventbus';
-import JBase from './JBase';
+import JBase, { createBaseCommon } from './JBase';
 import {
   ADD_HIDE_HANDLER,
   ADD_SHOW_HANDLER,
@@ -7,13 +6,18 @@ import {
   HIDE_HANDLER,
   SHOW_HANDLER,
 } from './utils/const';
-import expand, { INIT } from './utils/expand';
 
-@expand('onLoad')
+type Rd = Record<string, any>;
+
+const { addMixin, addIntercept, initOptions } = createBaseCommon();
+
+function init(opts: any) {
+  Page(initOptions(opts, 'onLoad'));
+}
 export default class JPage extends JBase {
-  static mixin: (obj: any) => void;
-  static intercept: (event: string, fn: IEventFunction) => void;
-  static [INIT]: (...data: any[]) => any;
+  static mixin = addMixin;
+  static intercept = addIntercept;
+  opts: wxNS.Page.Options<Rd, Rd>;
 
   /**
    * 滚动到指定元素
@@ -57,14 +61,24 @@ export default class JPage extends JBase {
     });
   }
 
-  constructor(opts?: any) {
+  constructor(opts?: wxNS.Page.Options<Rd, Rd>) {
     super();
     if (!(this instanceof JPage)) {
       return new JPage(opts);
     }
+    this.opts = opts;
+    this.appendProtoMethods();
+    init(this.opts);
+  }
 
-    const options = JPage[INIT](opts, this);
-    Page(options);
+  appendProtoMethods() {
+    Object.assign(
+      this.opts,
+      {
+        $scrollIntoView: this.$scrollIntoView,
+      },
+      Object.getPrototypeOf(Object.getPrototypeOf(this))
+    );
   }
 }
 
@@ -85,6 +99,7 @@ JPage.mixin({
   [ADD_HIDE_HANDLER]: handlerFactory(HIDE_HANDLER),
   onLoad(options: any) {
     this.$options = options;
+    // @ts-ignore
     this[ALL_COMPONENTS] = this[ALL_COMPONENTS] || new WeakSet();
     Object.defineProperty(this, '$appOptions', {
       get() {

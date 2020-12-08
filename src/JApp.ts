@@ -1,17 +1,31 @@
-import JBase from './JBase';
-import expand, { INIT } from './utils/expand';
-@expand('onLaunch')
+import JBase, { createBaseCommon } from './JBase';
+
+const { addMixin, addIntercept, initOptions } = createBaseCommon();
+
+function init(opts: any) {
+  App(initOptions(opts, 'onLaunch'));
+}
+
 export default class JApp extends JBase {
-  static mixin: (obj: any) => void;
-  static [INIT]: (...data: any[]) => any;
-  constructor(opts?: any) {
+  static mixin = addMixin;
+  static intercept = addIntercept;
+  private opts: wxNS.App.Option;
+
+  constructor(opts?: wxNS.App.Option) {
     super();
     if (!(this instanceof JApp)) {
       return new JApp(opts);
     }
+    this.opts = opts;
+    this.appendProtoMethods();
+    init(this.opts);
+  }
 
-    const options = JApp[INIT](opts);
-    App(options);
+  appendProtoMethods() {
+    Object.assign(
+      this.opts,
+      Object.getPrototypeOf(Object.getPrototypeOf(this))
+    );
   }
 }
 
@@ -21,5 +35,5 @@ JApp.mixin({
   },
   onShow(options: any) {
     this.$appOptions = options;
-  }
+  },
 });

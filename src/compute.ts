@@ -364,6 +364,7 @@ function tryUseProxyCollectDepKeys(
     fn.call(scope);
     scope.data = originData;
   } catch (e) {
+    console.warn('Error in tryUseProxyCollectDepKeys', e);
     isSuccess = false;
   } finally {
     scope.data = originData;
