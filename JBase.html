@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JBase | jgb-weapp</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    
+    <meta name="description" content="jgb-weapp 微信小程序渐进式框架。提供完善的typescript支持。">
+    <link rel="preload" href="/jgb-weapp/assets/css/0.styles.b435c41d.css" as="style"><link rel="preload" href="/jgb-weapp/assets/js/app.2ffdfeb4.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/2.03a7257d.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/6.f879789a.js" as="script"><link rel="prefetch" href="/jgb-weapp/assets/js/10.85a84b9c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/11.c1810299.js"><link rel="prefetch" href="/jgb-weapp/assets/js/3.01385c65.js"><link rel="prefetch" href="/jgb-weapp/assets/js/4.7d5f245c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/5.3ce865cf.js"><link rel="prefetch" href="/jgb-weapp/assets/js/7.0b978387.js"><link rel="prefetch" href="/jgb-weapp/assets/js/8.0b9cad7e.js"><link rel="prefetch" href="/jgb-weapp/assets/js/9.038366f5.js">
+    <link rel="stylesheet" href="/jgb-weapp/assets/css/0.styles.b435c41d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/jgb-weapp/" class="home-link router-link-active"><!----> <span class="site-name">jgb-weapp</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/jgb-weapp/JBase.html" aria-current="page" class="active sidebar-link">基类</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/jgb-weapp/JBase.html#扩展属性" class="sidebar-link">扩展属性</a></li></ul></li><li><a href="/jgb-weapp/JApp.html" class="sidebar-link">App扩展</a></li><li><a href="/jgb-weapp/JPage.html" class="sidebar-link">Page扩展</a></li><li><a href="/jgb-weapp/JComponent.html" class="sidebar-link">Component扩展</a></li><li><a href="/jgb-weapp/jgb.html" class="sidebar-link">wx扩展</a></li><li><a href="/jgb-weapp/plugins.html" class="sidebar-link">插件</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="jbase"><a href="#jbase" class="header-anchor">#</a> JBase</h1> <p><code>JApp</code> 、<code>JPage</code>、 <code>JComponent</code>的基类</p> <h2 id="扩展属性"><a href="#扩展属性" class="header-anchor">#</a> 扩展属性</h2> <h3 id="on"><a href="#on" class="header-anchor">#</a> $on</h3> <p>事件监听
+<code>\$on(evtName: string, fn: IEventFunction)</code></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$on</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> data <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="once"><a href="#once" class="header-anchor">#</a> $once</h3> <p>事件监听,只触发一次
+<code>\$once(evtName: string, fn: IEventFunction)</code></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$once</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> data <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="emit"><a href="#emit" class="header-anchor">#</a> $emit</h3> <p>事件触发
+<code>\$emit(evtName: string, ...data: any[])</code></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      options
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="emitasync"><a href="#emitasync" class="header-anchor">#</a> $emitAsync</h3> <p>异步事件触发，可以等待
+<code>\$emitAsync(evtName: string, ...data: any[])</code></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token keyword">async</span> <span class="token function">onLoad</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emitAsync</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      options
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'触发完成'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="off"><a href="#off" class="header-anchor">#</a> $off</h3> <p>解除事件绑定</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$on</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> data <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function">unLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$off</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="addbusid"><a href="#addbusid" class="header-anchor">#</a> $addBusId</h3> <p><code>1.6.3</code> 起</p> <p>向 <code>Page</code> 或者 <code>Component</code> 添加 <code>eventBusId</code>, 在销毁时自动 <code>off</code>。防止在内存泄漏等问题。
+或者考虑使用 <code>this.$on</code> 会自动销毁。</p> <p><strong>注意如果不传 <code>busInstance</code> 默认是全局的 <code>bus</code></strong></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage<span class="token punctuation">,</span> bus<span class="token punctuation">,</span> EventBus <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> newBus <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EventBus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> busId <span class="token operator">=</span> bus<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'someChange'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// default</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$addBusId</span><span class="token punctuation">(</span>busId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// or while auto destory when Page destoryed</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$on</span><span class="token punctuation">(</span><span class="token string">'someChange'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> id <span class="token operator">=</span> newBus<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'someChange'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$addBusId</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> newBus<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="destory"><a href="#destory" class="header-anchor">#</a> $destory</h3> <p>清除所有当前绑定的事件，在<code>页面</code>或者<code>组件</code>销毁时会自动调用。</p> <h3 id="settimeout"><a href="#settimeout" class="header-anchor">#</a> $setTimeout</h3> <p><code>v1.6.0</code>起</p> <p><code>setTimeout</code>定时器, 在<code>页面</code>或者<code>组件</code>销毁时清空。</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onTap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="setinterval"><a href="#setinterval" class="header-anchor">#</a> $setInterval</h3> <p><code>v1.6.0</code>起</p> <p><code>setInterval</code>定时器, 在<code>页面</code>或者<code>组件</code>销毁时清空。</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token function">JComponent</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  methods<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">onTap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$setInterval</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/jgb-weapp/JApp.html">
+        App扩展
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/jgb-weapp/assets/js/app.2ffdfeb4.js" defer></script><script src="/jgb-weapp/assets/js/2.03a7257d.js" defer></script><script src="/jgb-weapp/assets/js/6.f879789a.js" defer></script>
+  </body>
+</html>

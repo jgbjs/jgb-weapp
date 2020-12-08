@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jgb-weapp | jgb-weapp</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    
+    <meta name="description" content="jgb-weapp 微信小程序渐进式框架。提供完善的typescript支持。">
+    <link rel="preload" href="/jgb-weapp/assets/css/0.styles.b435c41d.css" as="style"><link rel="preload" href="/jgb-weapp/assets/js/app.2ffdfeb4.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/2.03a7257d.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/9.038366f5.js" as="script"><link rel="prefetch" href="/jgb-weapp/assets/js/10.85a84b9c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/11.c1810299.js"><link rel="prefetch" href="/jgb-weapp/assets/js/3.01385c65.js"><link rel="prefetch" href="/jgb-weapp/assets/js/4.7d5f245c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/5.3ce865cf.js"><link rel="prefetch" href="/jgb-weapp/assets/js/6.f879789a.js"><link rel="prefetch" href="/jgb-weapp/assets/js/7.0b978387.js"><link rel="prefetch" href="/jgb-weapp/assets/js/8.0b9cad7e.js">
+    <link rel="stylesheet" href="/jgb-weapp/assets/css/0.styles.b435c41d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/jgb-weapp/" aria-current="page" class="home-link router-link-exact-active router-link-active"><!----> <span class="site-name">jgb-weapp</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/jgb-weapp/JBase.html" class="sidebar-link">基类</a></li><li><a href="/jgb-weapp/JApp.html" class="sidebar-link">App扩展</a></li><li><a href="/jgb-weapp/JPage.html" class="sidebar-link">Page扩展</a></li><li><a href="/jgb-weapp/JComponent.html" class="sidebar-link">Component扩展</a></li><li><a href="/jgb-weapp/jgb.html" class="sidebar-link">wx扩展</a></li><li><a href="/jgb-weapp/plugins.html" class="sidebar-link">插件</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="jgb-weapp"><a href="#jgb-weapp" class="header-anchor">#</a> jgb-weapp</h1> <p>微信小程序渐进增强框架，基于微信小程序原生扩展，语法和原生保持一致。</p> <h2 id="快速上手"><a href="#快速上手" class="header-anchor">#</a> 快速上手</h2> <ul><li>安装</li></ul> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">yarn</span> <span class="token function">add</span> -D jgb-weapp
+</code></pre></div><ul><li>使用</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// app.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> JApp<span class="token punctuation">,</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 类似vue的mixin</span>
+JPage<span class="token punctuation">.</span><span class="token function">mixin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">JApp</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLaunch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// todo:</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// pages/index.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// will console.log onLoad</span>
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/jgb-weapp/assets/js/app.2ffdfeb4.js" defer></script><script src="/jgb-weapp/assets/js/2.03a7257d.js" defer></script><script src="/jgb-weapp/assets/js/9.038366f5.js" defer></script>
+  </body>
+</html>

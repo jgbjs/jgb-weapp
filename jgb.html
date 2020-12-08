@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jgb | jgb-weapp</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    
+    <meta name="description" content="jgb-weapp 微信小程序渐进式框架。提供完善的typescript支持。">
+    <link rel="preload" href="/jgb-weapp/assets/css/0.styles.b435c41d.css" as="style"><link rel="preload" href="/jgb-weapp/assets/js/app.2ffdfeb4.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/2.03a7257d.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/10.85a84b9c.js" as="script"><link rel="prefetch" href="/jgb-weapp/assets/js/11.c1810299.js"><link rel="prefetch" href="/jgb-weapp/assets/js/3.01385c65.js"><link rel="prefetch" href="/jgb-weapp/assets/js/4.7d5f245c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/5.3ce865cf.js"><link rel="prefetch" href="/jgb-weapp/assets/js/6.f879789a.js"><link rel="prefetch" href="/jgb-weapp/assets/js/7.0b978387.js"><link rel="prefetch" href="/jgb-weapp/assets/js/8.0b9cad7e.js"><link rel="prefetch" href="/jgb-weapp/assets/js/9.038366f5.js">
+    <link rel="stylesheet" href="/jgb-weapp/assets/css/0.styles.b435c41d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/jgb-weapp/" class="home-link router-link-active"><!----> <span class="site-name">jgb-weapp</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/jgb-weapp/JBase.html" class="sidebar-link">基类</a></li><li><a href="/jgb-weapp/JApp.html" class="sidebar-link">App扩展</a></li><li><a href="/jgb-weapp/JPage.html" class="sidebar-link">Page扩展</a></li><li><a href="/jgb-weapp/JComponent.html" class="sidebar-link">Component扩展</a></li><li><a href="/jgb-weapp/jgb.html" aria-current="page" class="active sidebar-link">wx扩展</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/jgb-weapp/jgb.html#异步方法-promise-化" class="sidebar-link">异步方法 Promise 化</a></li><li class="sidebar-sub-header"><a href="/jgb-weapp/jgb.html#拦截" class="sidebar-link">拦截</a></li></ul></li><li><a href="/jgb-weapp/plugins.html" class="sidebar-link">插件</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="jgb"><a href="#jgb" class="header-anchor">#</a> jgb</h1> <p>基于<code>wx</code>扩展。</p> <h2 id="异步方法-promise-化"><a href="#异步方法-promise-化" class="header-anchor">#</a> 异步方法 Promise 化</h2> <p>由于内部维护异步 api 列表，由于微信更新，可能导致没有扩展到该 api。</p> <h3 id="example"><a href="#example" class="header-anchor">#</a> example</h3> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> jgb <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+jgb
+  <span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    url<span class="token operator">:</span> <span class="token string">'https://xxx'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>result <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="request"><a href="#request" class="header-anchor">#</a> request</h3> <p>扩展了<code>wx.request</code>的一些功能</p> <ul><li><p>最大请求数 10</p></li> <li><p>priority</p></li></ul> <p>请求优先级，默认 1，数值最大优先级越小。</p> <div class="language-ts extra-class"><pre class="language-ts"><code>jgb<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  priority<span class="token operator">:</span> <span class="token number">10</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="拦截"><a href="#拦截" class="header-anchor">#</a> 拦截</h2> <p><code>jgb.intercept(api: string, lifecycle: string, callback: Function)</code></p> <ul><li>api</li></ul> <p>拦截的方法名。e.g <code>request</code></p> <ul><li><p>lifecycle</p> <p>拦截函数的生命周期，主要是针对异步 api。</p> <ul><li><code>begin</code> 执行开始</li> <li><code>success</code> 执行成功</li> <li><code>fail</code> 执行失败</li> <li><code>complete</code> 执行完成</li></ul></li> <li><p>callback</p> <p>回调函数 <code>callback: (result, status, options) =&gt; any</code></p> <ul><li><code>result</code> 返回值，当<code>status == 'begin'</code>时为<code>options</code></li> <li><code>status</code> 当前生命周期</li> <li><code>options</code> 参数</li></ul></li></ul> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token comment">// 拦截请求</span>
+jgb<span class="token punctuation">.</span><span class="token function">intercept</span><span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">,</span> <span class="token string">'begin'</span><span class="token punctuation">,</span> options <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  options<span class="token punctuation">.</span>header <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span>options<span class="token punctuation">.</span>header<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    auth<span class="token operator">:</span> <span class="token string">'xxxx'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> options<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 拦截返回数据</span>
+jgb<span class="token punctuation">.</span><span class="token function">intercept</span><span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">,</span> <span class="token string">'success'</span><span class="token punctuation">,</span> result <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> data <span class="token operator">=</span> result<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+jgb<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url<span class="token operator">:</span> <span class="token string">'https://xxx'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/jgb-weapp/JComponent.html" class="prev">
+        Component扩展
+      </a></span> <span class="next"><a href="/jgb-weapp/plugins.html">
+        插件
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/jgb-weapp/assets/js/app.2ffdfeb4.js" defer></script><script src="/jgb-weapp/assets/js/2.03a7257d.js" defer></script><script src="/jgb-weapp/assets/js/10.85a84b9c.js" defer></script>
+  </body>
+</html>

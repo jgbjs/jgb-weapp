@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JPage | jgb-weapp</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    
+    <meta name="description" content="jgb-weapp 微信小程序渐进式框架。提供完善的typescript支持。">
+    <link rel="preload" href="/jgb-weapp/assets/css/0.styles.b435c41d.css" as="style"><link rel="preload" href="/jgb-weapp/assets/js/app.2ffdfeb4.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/2.03a7257d.js" as="script"><link rel="preload" href="/jgb-weapp/assets/js/8.0b9cad7e.js" as="script"><link rel="prefetch" href="/jgb-weapp/assets/js/10.85a84b9c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/11.c1810299.js"><link rel="prefetch" href="/jgb-weapp/assets/js/3.01385c65.js"><link rel="prefetch" href="/jgb-weapp/assets/js/4.7d5f245c.js"><link rel="prefetch" href="/jgb-weapp/assets/js/5.3ce865cf.js"><link rel="prefetch" href="/jgb-weapp/assets/js/6.f879789a.js"><link rel="prefetch" href="/jgb-weapp/assets/js/7.0b978387.js"><link rel="prefetch" href="/jgb-weapp/assets/js/9.038366f5.js">
+    <link rel="stylesheet" href="/jgb-weapp/assets/css/0.styles.b435c41d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/jgb-weapp/" class="home-link router-link-active"><!----> <span class="site-name">jgb-weapp</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/jgb-weapp/JBase.html" class="sidebar-link">基类</a></li><li><a href="/jgb-weapp/JApp.html" class="sidebar-link">App扩展</a></li><li><a href="/jgb-weapp/JPage.html" aria-current="page" class="active sidebar-link">Page扩展</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/jgb-weapp/JPage.html#使用" class="sidebar-link">使用</a></li><li class="sidebar-sub-header"><a href="/jgb-weapp/JPage.html#扩展功能" class="sidebar-link">扩展功能</a></li><li class="sidebar-sub-header"><a href="/jgb-weapp/JPage.html#扩展属性" class="sidebar-link">扩展属性</a></li></ul></li><li><a href="/jgb-weapp/JComponent.html" class="sidebar-link">Component扩展</a></li><li><a href="/jgb-weapp/jgb.html" class="sidebar-link">wx扩展</a></li><li><a href="/jgb-weapp/plugins.html" class="sidebar-link">插件</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="jpage"><a href="#jpage" class="header-anchor">#</a> JPage</h1> <p>继承<a href="/jgb-weapp/JBase.html">JBase</a></p> <h2 id="使用"><a href="#使用" class="header-anchor">#</a> 使用</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// pages/index.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="扩展功能"><a href="#扩展功能" class="header-anchor">#</a> 扩展功能</h2> <h3 id="mixin"><a href="#mixin" class="header-anchor">#</a> mixin</h3> <p>与 <code>vue</code> 类似的 <code>mixin</code>。执行顺序 <code>mixin</code> 优先。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// app.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> pv <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'xxx-tracker'</span><span class="token punctuation">;</span>
+
+JPage<span class="token punctuation">.</span><span class="token function">mixin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 埋点</span>
+    <span class="token function">pv</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// pages/index.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// will auto execute pv()</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="intercept"><a href="#intercept" class="header-anchor">#</a> intercept</h3> <ul><li><code>intercept(eventname: string, func: (opts:any) =&gt; any)</code></li></ul> <p>在<code>Page.onLoad</code>时执行拦截 <code>Page</code> 的某个方法接受的参数，并返回新值。内部实现时通过, <code>Object.defineProperty</code>实现。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+JPage<span class="token punctuation">.</span><span class="token function">intercept</span><span class="token punctuation">(</span><span class="token string">'onShareAppMessage'</span><span class="token punctuation">,</span> <span class="token parameter">opts</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// opts 为 onShareAppMessage 的options</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>opts<span class="token punctuation">.</span>webViewUrl<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// do something</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> opts<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul><li><code>intercept(func: (opts:any) =&gt; any)</code></li></ul> <p>提供拦截整个<code>Page(opts: object)</code></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+JPage<span class="token punctuation">.</span><span class="token function">intercept</span><span class="token punctuation">(</span><span class="token parameter">opts</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> oldLoad <span class="token operator">=</span> opts<span class="token punctuation">.</span>onLoad<span class="token punctuation">;</span>
+
+  opts<span class="token punctuation">.</span><span class="token function-variable function">onLoad</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// todo</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> opts<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="computed"><a href="#computed" class="header-anchor">#</a> computed</h3> <p>自动计算属性，类似 Vue.computed. <a href="/jgb-weapp/JComponent.html#computed">参考Compoonent</a></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  data<span class="token operator">:</span> <span class="token punctuation">{</span>
+    i<span class="token operator">:</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  computed<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span>a <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="watch"><a href="#watch" class="header-anchor">#</a> watch</h3> <p>数据监听。 <a href="/jgb-weapp/JComponent.html#watch">参考Component</a></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  data<span class="token operator">:</span> <span class="token punctuation">{</span>
+    i<span class="token operator">:</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  watch<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">[</span><span class="token string">'i.*'</span><span class="token punctuation">]</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'i'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="扩展属性"><a href="#扩展属性" class="header-anchor">#</a> 扩展属性</h2> <h3 id="scrollintoview"><a href="#scrollintoview" class="header-anchor">#</a> $scrollIntoView</h3> <p>滚动到页面指定元素</p> <p><code>$scrollIntoView(selector: string, ctx?: any)</code></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$scrollIntoView</span><span class="token punctuation">(</span><span class="token string">'#targetid'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="options"><a href="#options" class="header-anchor">#</a> $options</h3> <p><code>Page.onLoad</code>时<code>options</code></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$options<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="appoptions"><a href="#appoptions" class="header-anchor">#</a> $appOptions</h3> <p><code>getApp().$appOptions</code></p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> JPage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'jgb-weapp'</span><span class="token punctuation">;</span>
+
+<span class="token function">JPage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">onClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$appOptions<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/jgb-weapp/JApp.html" class="prev">
+        App扩展
+      </a></span> <span class="next"><a href="/jgb-weapp/JComponent.html">
+        Component扩展
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/jgb-weapp/assets/js/app.2ffdfeb4.js" defer></script><script src="/jgb-weapp/assets/js/2.03a7257d.js" defer></script><script src="/jgb-weapp/assets/js/8.0b9cad7e.js" defer></script>
+  </body>
+</html>
