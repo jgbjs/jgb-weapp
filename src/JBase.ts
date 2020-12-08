@@ -1,11 +1,59 @@
 import { IEventBus, IEventFunction } from '../types/eventbus';
 import { bus } from './EventBus';
 import nextTick from './utils/nextTick';
+import { createStaticMixin, mergeMixn } from './utils/mixin';
+import {
+  callInterceptCall,
+  createStaticIntercept,
+  doIntercept,
+} from './utils/intercept';
+import { hook } from './utils/hook';
 
 export const event = '$events$';
 export const evtBusCollection = '$evtBus$';
 export const setTimeoutCollection = '$setTimeout$';
 export const setIntervalCollection = '$setInterval$';
+
+export function createBaseCommon() {
+  const { addMixin, getMixin } = createStaticMixin();
+  const {
+    addIntercept,
+    getIntercepts,
+    interceptOptions,
+  } = createStaticIntercept();
+
+  return {
+    addMixin,
+    addIntercept,
+    initOptions(options: Record<string, any>, initEvent: string) {
+      options = mergeMixn(options, new Set(getMixin()));
+      // 初始化 JBase
+      hook(
+        options,
+        initEvent,
+        function(this: any) {
+          JBase.call(this);
+          // intercept use Object.defineProperty
+          // so Intercept invoke must be init after first lifycycle
+          // but will miss interceptEntry functions
+          doIntercept(this, getIntercepts());
+        },
+        true
+      );
+
+      const oldCreated = options[initEvent];
+
+      // fix created can't intercept
+      options[initEvent] = function(...data: any[]) {
+        const intercepts = getIntercepts();
+        const options = callInterceptCall(data, intercepts.get(initEvent));
+        return oldCreated.apply(this, options);
+      };
+
+      return interceptOptions(options);
+    },
+  };
+}
 
 export default class JBase {
   /* 当前绑定事件集合 */
@@ -86,7 +134,7 @@ export default class JBase {
       }
     });
     this[event] = [];
-    this[setTimeoutCollection].forEach(id => clearTimeout(id));
-    this[setIntervalCollection].forEach(id => clearInterval(id));
+    this[setTimeoutCollection].forEach((id) => clearTimeout(id));
+    this[setIntervalCollection].forEach((id) => clearInterval(id));
   }
 }

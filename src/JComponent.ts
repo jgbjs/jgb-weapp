@@ -1,74 +1,100 @@
-import { IEventFunction } from '../types/eventbus';
-import JBase, { event } from './JBase';
+import JBase, { createBaseCommon } from './JBase';
 import { getCurrentPage, isSupportVersion, noop } from './utils';
 import {
   ADD_HIDE_HANDLER,
   ADD_SHOW_HANDLER,
   ALL_COMPONENTS,
   HIDE_HANDLER,
-  SHOW_HANDLER
+  SHOW_HANDLER,
 } from './utils/const';
-import expand, { INIT } from './utils/expand';
 import { hook } from './utils/hook';
 
-const lifetimesKey = ['created', 'attached', 'ready', 'moved', 'detached']
+const lifetimesKey: ['created', 'attached', 'ready', 'moved', 'detached'] = [
+  'created',
+  'attached',
+  'ready',
+  'moved',
+  'detached',
+];
 
-// @ts-ignore
-@expand('created')
+type Rd = Record<string, any>;
+
+const { addMixin, addIntercept, initOptions } = createBaseCommon();
+
+function init(opts: any) {
+  Component(initOptions(opts, 'created'));
+}
+
 export default class JComponent extends JBase {
-  static mixin: (obj: any) => void;
-  static intercept: (event: string, fn: IEventFunction) => void;
-  static [INIT]: (...data: any[]) => any;
-  constructor(opts?: any) {
+  static mixin = addMixin;
+  static intercept = addIntercept;
+  opts?: wxNS.Component.Options<Rd, Rd, Rd>;
+
+  constructor(opts?: wxNS.Component.Options<Rd, Rd, Rd>) {
     super();
     if (!(this instanceof JComponent)) {
       return new JComponent(opts);
     }
+    this.opts = opts;
+    this.compatLifetime();
+    this.compatPageLifetime();
+    this.appendProtoMethods();
 
-    // created call JBase
-    hook(opts, 'created', function (this: any) {
-      JBase.call(this);
-    });
+    init(this.opts);
+  }
 
-    // 判断是否支持pageLifetimes
+  appendProtoMethods() {
+    const methods = Object.assign(
+      {},
+      Object.getPrototypeOf(Object.getPrototypeOf(this)),
+      this.opts.methods
+    );
+    this.opts.methods = methods;
+  }
+
+  compatPageLifetime() {
+    const opts = this.opts;
     if (opts.pageLifetimes && !isSupportVersion('2.2.3')) {
       const { show = noop, hide = noop, resize = noop } = opts.pageLifetimes;
       opts.methods = Object.assign(opts.methods, {
         [SHOW_HANDLER]: show,
-        [HIDE_HANDLER]: hide
+        [HIDE_HANDLER]: hide,
       });
     }
+  }
 
-
-    if (opts.lifetimes) {
-      const lifetimes = opts.lifetimes;
-      // 对低版本做兼容
-      if (!isSupportVersion('2.2.3')) {
-        lifetimesKey.forEach(key => {
-          if (lifetimes[key]) {
-            hook(opts, key, lifetimes[key]);
-          }
-        })
-      }
-      else {
-        // 兼容老版本生命周期
-        lifetimesKey.forEach(key => {
-          if (lifetimes[key]) {
-            hook(lifetimes, key, function (this: JComponent, ...args: any[]) {
-              const fn = opts[key];
-              if (typeof fn === 'function') {
-                fn.apply(this, args);
-              }
-            }, false);
-          }
-        })
-      }
+  compatLifetime() {
+    const opts = this.opts;
+    if (!opts.lifetimes) {
+      return;
     }
 
-    opts.methods = Object.assign({}, opts.methods, JBase.prototype);
-
-    const options = JComponent[INIT](opts);
-    Component(options);
+    const lifetimes = opts.lifetimes;
+    // 对低版本做兼容
+    if (!isSupportVersion('2.2.3')) {
+      lifetimesKey.forEach((key) => {
+        if (lifetimes[key]) {
+          hook(opts, key, lifetimes[key]);
+        }
+      });
+      return;
+    }
+    // 兼容老版本生命周期
+    lifetimesKey.forEach((key) => {
+      if (lifetimes[key]) {
+        hook(
+          lifetimes,
+          key,
+          function(this: JComponent, ...args: any[]) {
+            const fn = opts[key];
+            if (typeof fn === 'function') {
+              fn.apply(this, args);
+            }
+          },
+          false
+        );
+      }
+    });
   }
 }
 
@@ -107,5 +133,5 @@ JComponent.mixin({
       this.$page[ALL_COMPONENTS].delete(this);
     }
     this.$destory();
-  }
+  },
 });
