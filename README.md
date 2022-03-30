@@ -22,21 +22,21 @@ jgb build
 
 ```js
 // app.js
-import { JApp } from 'weapp';
+import { JApp } from 'jgb-weapp';
 import 'init.js';
 JApp({});
 
 // pages/index/index.js
-import { JPage } from 'weapp';
+import { JPage } from 'jgb-weapp';
 
 JPage({});
 
 // components/index/index.js
-import { JComponent } from 'weapp';
+import { JComponent } from 'jgb-weapp';
 JComponent({});
 
 // init.js
-import { JApp, JPage, JComponent } from 'weapp';
+import { JApp, JPage, JComponent } from 'jgb-weapp';
 
 JPage.mixin({
   onLoad() {
